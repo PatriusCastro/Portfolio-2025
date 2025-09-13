@@ -14,13 +14,20 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 bg-slate-200 dark:bg-slate-800 rounded-lg cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
+      className="group relative flex items-center w-14 h-8 bg-slate-300 dark:bg-slate-800"
     >
-      {theme === "dark" ? (
-        <Sun className="w-5 h-5 text-slate-200" />
-      ) : (
-        <Moon className="w-5 h-5 text-gray-900" />
-      )}
+      <span
+        className="absolute left-1 top-1 w-6 h-6 flex items-center justify-center rounded-full bg-white dark:bg-slate-700 shadow-md transition-all duration-300 "
+        style={{
+          transform: theme === "dark" ? "translateX(24px)" : "translateX(0px)",
+        }}
+      >
+        {theme === "dark" ? (
+          <Sun className="w-4 h-4 text-yellow-400 group-hover:text-yellow-300" />
+        ) : (
+          <Moon className="w-4 h-4 text-gray-800 group-hover:text-gray-600" />
+        )}
+      </span>
     </button>
   );
 }

@@ -11,10 +11,10 @@ export default function Hero() {
 
       {/* Hero Buttons */}
       <div className="gap-4 flex">
-        <button className="bg-blue-600 hover:bg-blue-500 font-bold px-4 py-2 rounded-xl text-white">
+        <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white">
           Contact Me
         </button>
-        <button className="hover:bg-slate-800 font-bold border px-4 py-2 rounded-xl">
+        <button className="px-4 py-2 hover:bg-slate-800 border">
           Download CV
         </button>
       </div>

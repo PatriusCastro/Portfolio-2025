@@ -2,8 +2,27 @@
 
 @variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+@layer utilities {
+  @keyframes spin-once {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-once {
+    animation: spin-once 0.5s linear 1;
+  }
+}
+
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+  @apply font-semibold rounded-xl transition-colors duration-300 cursor-pointer;
 }
 
 /*
