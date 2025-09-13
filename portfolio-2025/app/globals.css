@@ -9,3 +9,7 @@ html {
 button {
   @apply font-semibold rounded-xl transition-colors duration-300 cursor-pointer;
 }
+
+.glass-card {
+  @apply bg-slate-200/60 dark:bg-slate-800/60 backdrop-blur-md shadow-lg rounded-xl p-6;
+}
