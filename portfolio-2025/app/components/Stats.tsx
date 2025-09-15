@@ -3,7 +3,7 @@ import { LaptopMinimalCheck, FolderGit2, Star} from "lucide-react";
 
 export default function Stats() {
   return (
-    <section className="py-6 px-12 border-y-1 border-slate-300 dark:border-slate-700 mask-x-from-90% to-100%">
+    <section className="py-6 px-12 border-y-1 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg border-slate-300 dark:border-slate-700 mask-x-from-90% to-100%">
       <div className="flex flex-col sm:flex-row justify-between items-center w-full text-center gap-y-6">
         {/* Experience */}
         <a

@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <nav
       className={`flex justify-between items-center py-4 px-6 sticky top-0 z-10 transition-all
-        ${scrolled ? "bg-white/30 dark:bg-slate-900/30 backdrop-blur-lg shadow-sm sm:rounded-b-xl" : ""}
+        ${scrolled ? "bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm sm:rounded-b-xl" : ""}
       `}
     >
       <h1 className="font-bold cursor-pointer">patrius.</h1>

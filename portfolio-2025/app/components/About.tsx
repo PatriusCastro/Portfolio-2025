@@ -1,8 +1,8 @@
 export default function About() {
   return (
-    <section className="min-h-[60vh] px-[2rem] flex flex-col justify-center items-center">
+    <section className="min-h-[70vh] px-[2rem] flex flex-col justify-center items-center">
       <div className="text-center max-w-3xl">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+        <h2 className="text-3xl uppercase sm:text-4xl font-bold mb-4">
           About Me
         </h2>
         <p className="text-sm sm:text-md xl:text-base mb-6">

@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../theme/ThemeProvider";
 
-export const inter = Inter({ subsets: ["latin"] });
+export const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Patrius Castro",
@@ -16,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={poppins.className} suppressHydrationWarning>
       <body className={`bg-white text-black dark:bg-black dark:text-white`}>
         <ThemeProvider enableSystem={true} defaultTheme="system">
           {children}
