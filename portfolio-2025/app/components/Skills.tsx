@@ -108,7 +108,7 @@ export default function Skills() {
             {activeGroup === "Languages" &&
               "Proficient in modern programming languages for building dynamic and responsive web applications."} 
             {activeGroup === "Frameworks" &&
-              "Knowledgeable in popular frameworks and libraries for efficient frontend and backend development."}
+              "Knowledgeable in popular frameworks and libraries for efficient full stack development."}
             {activeGroup === "Databases" &&
               "Experienced in relational and NoSQL databases for managing data effectively."}
             {activeGroup === "Tools" &&
