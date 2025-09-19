@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -21,7 +23,10 @@ export default function Navbar() {
       <button
         className="group relative font-bold text-slate-900 dark:text-slate-200 transition duration-300"
         aria-label="Scroll to top"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={() => {
+          router.push("/"); // navigate to root without "#"
+          window.scrollTo({ top: 0, behavior: "smooth" }); // smooth scroll
+        }}
       >
         <span className="patrius-text">patrius.</span>
       </button>

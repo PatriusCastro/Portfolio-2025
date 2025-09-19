@@ -73,3 +73,18 @@ button {
     #f3f4f6 100%
   );
 }
+
+.group\/card-grid:hover .card:not(:hover) .card-background,
+.group\/card-grid:hover .card:not(:hover) .card-category {
+  filter: brightness(0.8) contrast(1.2) blur(4px);
+  transition: all 0.5s ease;
+}
+
+.group\/card-grid:hover .card:not(:hover){
+  transform: scale(0.95) translateZ(0);
+  transition: all 0.5s ease; 
+}
+
+.card:hover .card-background {
+  transform: scale(1.15) translateZ(0);
+}

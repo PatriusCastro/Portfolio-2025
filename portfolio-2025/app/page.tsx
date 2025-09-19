@@ -19,6 +19,9 @@ export default async function Home() {
       <Skills />
       <Project />
       <Contact />
+      <footer className="mt-12 py-6 px-4 sm:px-6 md:px-12 w-full mx-auto text-center text-sm text-slate-600 dark:text-slate-400">
+        &copy; {new Date().getFullYear()} Patrius Castro. All rights reserved.
+      </footer>
     </main>
   );
 }

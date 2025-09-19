@@ -41,20 +41,23 @@ export default function Project() {
             explore the code!
         </p>
       </div>
-      <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 w-full">
+      <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 w-full group/card-grid">
         {projects.map((project, index) => (
           <div
             key={index}
-            className="relative group rounded-2xl overflow-hidden shadow border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg transition-all duration-300"
+            className="relative card group/card rounded-2xl overflow-hidden shadow border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg transition-all duration-500"
           >
-            <div className="overflow-hidden">
-                <img
+            {/* Image */}
+            <div className="card-background overflow-hidden">
+              <img
                 src={project.imageUrl}
                 alt={project.title}
-                className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                className="w-full h-56 object-cover transition-transform duration-500 group-hover/card:scale-110"
+              />
             </div>
-            <div className="p-6">
+
+            {/* Content */}
+            <div className="p-6 card-category transition duration-500">
               <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
               <p className="text-sm mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -83,6 +86,7 @@ export default function Project() {
           </div>
         ))}
       </div>
+
     </section>
   );
 }
