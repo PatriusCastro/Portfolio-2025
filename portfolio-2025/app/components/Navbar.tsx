@@ -1,17 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
-import Logo from "../../public/assets/main-logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -22,7 +18,14 @@ export default function Navbar() {
         ${scrolled ? "bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm sm:rounded-b-xl" : ""}
       `}
     >
-      <h1 className="font-bold cursor-pointer">patrius.</h1>
+      <button
+        className="group relative font-bold text-slate-900 dark:text-slate-200 transition duration-300"
+        aria-label="Scroll to top"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        <span className="patrius-text">patrius.</span>
+      </button>
+
       <ThemeToggle />
     </nav>
   );

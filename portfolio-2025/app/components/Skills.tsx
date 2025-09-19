@@ -23,7 +23,8 @@ import {
   SiC,
   SiCplusplus,
   SiPostgresql,
-  SiGithub
+  SiGithub,
+  SiJira
 } from "react-icons/si";
 
 const skillGroups: Record<
@@ -60,6 +61,7 @@ const skillGroups: Record<
     { name: "Docker", icon: <SiDocker /> },
     { name: "Figma", icon: <SiFigma /> },
     { name: "WordPress", icon: <SiWordpress /> },
+    { name: "Jira", icon: <SiJira /> }
   ],
 };
 
@@ -67,10 +69,10 @@ export default function Skills() {
   const [activeGroup, setActiveGroup] = useState("Languages");
 
   return (
-    <section className="py-16 px-4 sm:px-8 sm:rounded-xl border border-slate-300 dark:border-slate-800 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm transition-colors duration-300">
+    <section className="py-16 px-4 sm:px-8 sm:rounded-2xl border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm transition-colors duration-300">
       {/* Title */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl uppercase sm:text-4xl font-bold mb-4">
+        <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
           Technologies I Use
         </h2>
         <p className="text-slate-600 text-sm sm:text-base dark:text-slate-300 max-w-2xl mx-auto">
@@ -80,12 +82,12 @@ export default function Skills() {
       </div>
 
       {/* Toggle Tabs */}
-      <div className="flex justify-center gap-2 sm:gap-4 mb-12">
+      <div className="grid grid-cols-2 sm:flex justify-center gap-2 sm:gap-4 mb-12">
         {Object.keys(skillGroups).map((group) => (
           <button
             key={group}
             onClick={() => setActiveGroup(group)}
-            className={`px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all 
+            className={`px-4 py-2 rounded-md text-base font-medium transition-all 
               ${
                 activeGroup === group
                   ? "bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900"
@@ -121,7 +123,7 @@ export default function Skills() {
           {skillGroups[activeGroup].map((skill, i) => (
             <div
               key={i}
-              className="flex h-fit justify-between items-center gap-2 px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-white hover:text-slate-950 dark:hover:bg-slate-800 dark:hover:text-white transition-all cursor-pointer"
+              className="flex h-fit justify-between items-center gap-2 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-gradient-to-r hover:from-slate-100 hover:to-slate-300 hover:text-slate-950 dark:hover:bg-gradient-to-r dark:hover:from-slate-500 dark:hover:to-slate-800 dark:hover:text-white transition-colors duration-300 cursor-pointer"
             >
               <span className="text-xl">{skill.icon}</span>
               <span className="text-sm font-medium cursor-pointer">{skill.name}</span>

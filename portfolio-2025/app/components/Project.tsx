@@ -31,9 +31,9 @@ const projects = [
 
 export default function Project() {
   return (
-    <section className="min-h-[80vh] py-[4rem] px-4 sm:px-0 flex flex-col justify-center items-center">
+    <section className="min-h-[85vh] py-[4rem] px-4 sm:px-0 flex flex-col justify-center items-center">
       <div className="text-center mb-8">
-        <h2 className="text-3xl uppercase sm:text-4xl font-bold mb-4">
+        <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
           Featured Projects
         </h2>
         <p className="text-sm sm:text-md xl:text-base mb-6">
@@ -45,7 +45,7 @@ export default function Project() {
         {projects.map((project, index) => (
           <div
             key={index}
-            className="relative group rounded-xl overflow-hidden shadow border border-slate-300 dark:border-slate-800 bg-white/30 dark:bg-slate-800/30 backdrop-blur-lg transition-all duration-300"
+            className="relative group rounded-2xl overflow-hidden shadow border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg transition-all duration-300"
           >
             <div className="overflow-hidden">
                 <img
@@ -54,7 +54,7 @@ export default function Project() {
                 className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
                 />
             </div>
-            <div className="p-4">
+            <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
               <p className="text-sm mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -73,7 +73,7 @@ export default function Project() {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border dark:border-slate-700 border-slate-300 hover:bg-blue-600 hover:border-blue-600 justify-center rounded-lg w-full py-1.5 text-slate-700 dark:text-slate-200 hover:text-white flex items-center gap-2 transition-colors duration-300"
+                    className="border dark:border-slate-700 border-slate-300 hover:bg-blue-600 hover:border-blue-600 justify-center rounded-xl w-full py-1.5 text-slate-700 dark:text-slate-200 hover:text-white flex items-center gap-2 transition-colors duration-300"
                   >
                     Source Code <FaGithub />
                   </a>

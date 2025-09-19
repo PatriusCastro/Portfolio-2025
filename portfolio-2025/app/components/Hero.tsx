@@ -1,22 +1,35 @@
+"use client";
+
 export default function Hero() {
   return (
-    <section className="h-[80vh] px-[2rem] flex flex-col justify-center items-center">
-      {/* Hero Texts */}
+    <section className="h-[80vh] flex flex-col items-center justify-center px-8">
       <div className="text-center">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-2">Patrius Castro</h1>
-        <p className="text-sm sm:text-md xl:text-base mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-2">
+          <span className="hero-metallic">Patrius Castro</span>
+        </h1>
+        <p className="text-base sm:text-lg xl:text-xl mb-6">
           Web Developer specializing in Frontend Development with React & Tailwind
         </p>
       </div>
 
-      {/* Hero Buttons */}
-      <div className="gap-4 flex">
-        <button className="px-4 py-2 text-sm sm:text-md xl:text-base bg-blue-600 hover:bg-blue-500 text-white">
+      <div className="flex gap-4">
+        <button
+          onClick={() =>
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+          }
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md hover:shadow-lg transition"
+        >
           Contact Me
         </button>
-        <button className="px-4 py-2 text-sm sm:text-md xl:text-base hover:bg-slate-300 dark:hover:bg-slate-800 border">
+        <a
+          href="/files/Patrick-Josuah-Castro-CV.pdf"
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 transition"
+        >
           Download CV
-        </button>
+        </a>
       </div>
     </section>
   );
