@@ -31,7 +31,7 @@ const projects = [
 
 export default function Project() {
   return (
-    <section className="min-h-[85vh] py-[4rem] px-4 sm:px-0 flex flex-col justify-center items-center">
+    <section className="min-h-[85vh] py-[4rem] px-6 sm:px-0 flex flex-col justify-center items-center">
       <div className="text-center mb-8">
         <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
           Featured Projects
@@ -76,7 +76,7 @@ export default function Project() {
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border dark:border-slate-700 border-slate-300 hover:bg-blue-600 hover:border-blue-600 justify-center rounded-xl w-full py-1.5 text-slate-700 dark:text-slate-200 hover:text-white flex items-center gap-2 transition-colors duration-300"
+                    className="border dark:border-slate-700 border-slate-300 hover:bg-gradient-to-t hover:from-blue-700 hover:to-blue-500 justify-center rounded-xl w-full py-1.5 text-slate-700 dark:text-slate-200 hover:text-white flex items-center gap-2 transition-colors duration-300"
                   >
                     Source Code <FaGithub />
                   </a>

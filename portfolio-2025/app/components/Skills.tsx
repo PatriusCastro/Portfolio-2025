@@ -69,7 +69,7 @@ export default function Skills() {
   const [activeGroup, setActiveGroup] = useState("Languages");
 
   return (
-    <section className="py-16 px-4 sm:px-8 sm:rounded-2xl border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm transition-colors duration-300">
+    <section className="py-16 px-6 sm:rounded-2xl border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm transition-colors duration-300">
       {/* Title */}
       <div className="text-center mb-12">
         <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
@@ -87,10 +87,10 @@ export default function Skills() {
           <button
             key={group}
             onClick={() => setActiveGroup(group)}
-            className={`px-4 py-2 rounded-md text-base font-medium transition-all 
+            className={`px-4 py-2 rounded-xl text-base font-medium transition-all 
               ${
                 activeGroup === group
-                  ? "bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900"
+                  ? "bg-blue-700 text-white dark:bg-slate-200 dark:text-slate-900"
                   : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
               }`}
           >

@@ -6,6 +6,7 @@ import Skills from "./components/Skills";
 import Project from "./components/Project";
 import Contact from "./components/Contact";
 import { getGithubStats } from "./lib/github";
+import FadeInSection from "./components/FadeInSection";
 
 export default async function Home() {
   const { projectCount, stars } = await getGithubStats();
@@ -14,11 +15,11 @@ export default async function Home() {
     <main className="md:px-[2rem] lg:px-[4rem] xl:px-[10rem] bg-linear-135 from-white to-slate-200 text-slate-900 dark:text-slate-200 dark:bg-linear-135 dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
       <Navbar />
       <Hero />
-      <Stats projectCount={projectCount} stars={stars} />
-      <About />
-      <Skills />
-      <Project />
-      <Contact />
+      <FadeInSection delay={0.1}><Stats projectCount={projectCount} stars={stars} /></FadeInSection>
+      <FadeInSection delay={0.2}><About /></FadeInSection>
+      <FadeInSection delay={0.3}><Skills /></FadeInSection>
+      <FadeInSection delay={0.4}><Project /></FadeInSection>
+      <FadeInSection delay={0.5}><Contact /></FadeInSection>
       <footer className="mt-12 py-6 px-4 sm:px-6 md:px-12 w-full mx-auto text-center text-sm text-slate-600 dark:text-slate-400">
         &copy; {new Date().getFullYear()} Patrius Castro. All rights reserved.
       </footer>

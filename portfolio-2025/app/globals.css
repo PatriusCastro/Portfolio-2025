@@ -8,7 +8,7 @@ html {
 }
 
 button {
-  @apply font-semibold rounded-xl transition-colors duration-300 cursor-pointer;
+  @apply font-semibold transition-colors duration-300 cursor-pointer;
 }
 
 .glass-card {
