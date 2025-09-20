@@ -45,7 +45,7 @@ export default function Contact() {
             </a>
             {/* LinkedIn */}
             <a
-                href="https://www.linkedin.com/in/patrick-josuah-castro/"
+                href="https://www.linkedin.com/in/patrick-josuah-castro-6aba2a27a/"
                 className="flex items-center justify-between bg-white/70 dark:bg-slate-800/30 hover:bg-blue-50 dark:hover:bg-white/10 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 transition shadow backdrop-blur group"
                 target="_blank"
                 rel="noopener noreferrer"
