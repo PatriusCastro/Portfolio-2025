@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript,
   SiHtml5, SiCss3, SiNodedotjs, SiLaravel, SiPython, SiDjango,
@@ -52,7 +51,6 @@ const groupDescriptions: Record<string, string> = {
   Tools:      "Dev tools for version control, containerization, design, and planning.",
 };
 
-// Single skill tile — shows icon + name, reveals bar on hover
 function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
   const [hovered, setHovered] = useState(false);
 
@@ -60,54 +58,22 @@ function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{
-        padding: "14px 16px",
-        borderRadius: 8,
-        border: "1px solid",
-        borderColor: hovered ? "var(--border-hover)" : "var(--border)",
-        background: hovered ? "rgba(0,0,139,0.06)" : "var(--surface2)",
-        transition: "border-color 0.2s, background 0.2s",
-        cursor: "default",
-        display: "flex",
-        flexDirection: "column",
-        gap: 10,
-      }}
+      className={`p-3.5 rounded-lg border flex flex-col gap-2.5 cursor-default transition-all duration-200
+        ${hovered ? "border-[var(--border-hover)] bg-[rgba(0,0,139,0.06)]" : "border-[var(--border)] bg-[var(--surface2)]"}`}
     >
-      {/* Icon + name row */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ fontSize: 18, color: hovered ? "var(--accent-mid)" : "var(--accent-dim)", transition: "color 0.2s" }}>
+      <div className="flex items-center gap-2.5">
+        <span className={`text-[18px] transition-colors duration-200 ${hovered ? "text-[var(--accent-mid)]" : "text-[var(--accent-dim)]"}`}>
           {skill.icon}
         </span>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text)", letterSpacing: "0.02em" }}>
-          {skill.name}
-        </span>
-        {/* Level label — slides in on hover */}
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            color: "var(--accent-mid)",
-            marginLeft: "auto",
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? "translateX(0)" : "translateX(6px)",
-            transition: "opacity 0.2s, transform 0.2s",
-          }}
-        >
+        <span className="font-mono text-[12px] text-[var(--text)] tracking-wide">{skill.name}</span>
+        <span className={`font-mono text-[10px] text-[var(--accent-mid)] ml-auto transition-all duration-200 ${hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1.5"}`}>
           {skill.level}%
         </span>
       </div>
-
-      {/* Skill bar — always rendered, only fills on hover + animated */}
-      <div style={{ height: 2, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
+      <div className="h-px bg-[var(--border)] rounded overflow-hidden">
         <div
-          style={{
-            height: "100%",
-            borderRadius: 2,
-            background: "linear-gradient(90deg, var(--accent-dim), var(--accent-mid))",
-            width: hovered && animated ? `${skill.level}%` : "0%",
-            transition: "width 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
-            boxShadow: "0 0 8px var(--accent-glow)",
-          }}
+          className="h-full rounded bg-gradient-to-r from-[var(--accent-dim)] to-[var(--accent-mid)] shadow-[0_0_8px_var(--accent-glow)] transition-[width] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+          style={{ width: hovered && animated ? `${skill.level}%` : "0%" }}
         />
       </div>
     </div>
@@ -116,8 +82,8 @@ function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
 
 export default function Skills() {
   const [activeGroup, setActiveGroup] = useState("Languages");
-  const [animated, setAnimated]       = useState(false);
-  const ref    = useRef(null);
+  const [animated, setAnimated] = useState(false);
+  const ref = useRef(null);
   const inView = useInView(ref, { once: true });
 
   useEffect(() => { if (inView) setAnimated(true); }, [inView]);
@@ -126,39 +92,23 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="py-14 px-6 sm:px-10 sm:rounded-2xl mb-16"
-      style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+      className="py-14 px-6 sm:px-10 sm:rounded-2xl mb-20 bg-[var(--surface)] border border-[var(--border)]"
     >
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <div>
           <div className="section-label">skills</div>
-          <h2
-            className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2"
-            style={{ color: "var(--text)" }}
-          >
-            Technologies I Use
-          </h2>
-          <p className="text-sm max-w-sm leading-relaxed" style={{ color: "var(--muted)" }}>
-            {groupDescriptions[activeGroup]}
-          </p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 text-[var(--text)]">Technologies I Use</h2>
+          <p className="text-sm max-w-sm leading-relaxed text-[var(--muted)]">{groupDescriptions[activeGroup]}</p>
         </div>
-
-        {/* Tab strip — right-aligned on desktop */}
         <div className="flex flex-wrap gap-2 shrink-0">
           {Object.keys(skillGroups).map(group => (
             <button
               key={group}
               onClick={() => setActiveGroup(group)}
-              className="px-4 py-1.5 rounded text-xs transition-all duration-200"
-              style={{
-                fontFamily: "var(--font-mono)",
-                letterSpacing: "0.06em",
-                border: "1px solid",
-                borderColor: activeGroup === group ? "rgba(0,0,139,0.45)" : "var(--border)",
-                background:   activeGroup === group ? "rgba(0,0,139,0.08)" : "transparent",
-                color:        activeGroup === group ? "var(--accent-mid)" : "var(--muted)",
-              }}
+              className={`px-4 py-1.5 rounded text-xs font-mono tracking-wide border transition-all duration-200
+                ${activeGroup === group
+                  ? "border-[rgba(0,0,139,0.45)] bg-[rgba(0,0,139,0.08)] text-[var(--accent-mid)]"
+                  : "border-[var(--border)] bg-transparent text-[var(--muted)]"}`}
             >
               {group}
             </button>
@@ -166,8 +116,7 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* Skill grid — fixed height so layout never shifts */}
-      <div style={{ minHeight: 280 }}>
+      <div className="min-h-[130px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeGroup}
