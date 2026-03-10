@@ -11,31 +11,144 @@ button {
   @apply font-semibold transition-colors duration-300 cursor-pointer;
 }
 
-.glass-card {
-  @apply bg-slate-200/60 dark:bg-slate-800/60 backdrop-blur-md;
+:root {
+  /* Base accent (light mode) */
+  --accent-h: 240;
+  --accent-s: 100%;
+  --accent-l: 27%;
+
+  /* Derived light-mode accent tones */
+  --accent:        hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  --accent-mid:    hsl(var(--accent-h), 80%, 48%);
+  --accent-soft:   hsl(var(--accent-h), 70%, 68%);
+  --accent-dim:    hsl(var(--accent-h), 65%, 38%);
+  --accent-pale:   rgba(0, 0, 200, 0.07);
+  --accent-glow:   rgba(0, 0, 180, 0.16);
+  --border-hover:  rgba(0, 0, 200, 0.32);
+
+  /* Nav background (light) */
+  --nav-bg-scrolled:   rgba(245, 246, 250, 0.88);
+  --nav-bg-flat:       rgba(245, 246, 250, 0.0);
+
+  /* Light mode surfaces */
+  --bg:       #f5f6fa;
+  --surface:  #ffffff;
+  --surface2: #eef0f6;
+  --border:   rgba(0, 0, 0, 0.07);
+  --text:     #0f1117;
+  --text-sub: #3a3f52;
+  --muted:    #7a84a0;
+  --muted2:   #b8bfce;
+  --green:    #1a7a4a;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] {
+  --accent-mid:    hsl(224, 90%, 68%);
+  --accent-soft:   hsl(224, 85%, 78%);
+  --accent-dim:    hsl(224, 75%, 55%);
+  --accent-pale:   rgba(77, 127, 255, 0.09);
+  --accent-glow:   rgba(77, 127, 255, 0.22);
+  --border-hover:  rgba(77, 127, 255, 0.35);
+
+  --nav-bg-scrolled:   rgba(8, 11, 18, 0.88);
+  --nav-bg-flat:       rgba(8, 11, 18, 0.0);
+
+  --bg:       #080b12;
+  --surface:  #0d1120;
+  --surface2: #121726;
+  --border:   rgba(255, 255, 255, 0.07);
+  --text:     #eef0f8;
+  --text-sub: #b0b8d0;
+  --muted:    #4a5272;
+  --muted2:   #2e3450;
+  --green:    #4a9a6a;
+}
+
+/* Background & layout */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dot-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(rgba(0, 0, 180, 0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+[data-theme="dark"] .dot-grid {
+  background-image: radial-gradient(rgba(77, 127, 255, 0.09) 1px, transparent 1px);
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+[data-theme="dark"] .vignette {
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(4, 6, 14, 0.65) 100%);
 }
 
 /* Keyframes */
 @keyframes shine {
-  0% { background-position: 200% center; }
+  0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+@keyframes drift {
+  0%, 100% { transform: translate(-50%, -55%) scale(1); }
+  50%       { transform: translate(-50%, -55%) scale(1.1); }
+}
 
+/* Metallic hero text */
+.hero-metallic {
+  display: inline-block;
+  background: linear-gradient(
+    115deg,
+    var(--text)        0%,
+    var(--accent-mid)  25%,
+    var(--accent-soft) 50%,
+    var(--accent-dim)  72%,
+    var(--text)        100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shine 9s linear infinite;
+}
+
+/* Navbar logo shine on hover */
 .patrius-text {
   display: inline-block;
   color: inherit;
   -webkit-text-fill-color: inherit;
-  transition: color .25s ease;
+  transition: color 0.25s ease;
 }
-
 .group:hover .patrius-text {
   background: linear-gradient(
     110deg,
-    #4b5563 0%,
-    #9ca3af 25%,
-    #f9fafb 50%,
-    #9ca3af 75%, 
-    #4b5563 100%
+    var(--muted)       0%,
+    var(--accent-mid)  25%,
+    var(--accent-soft) 50%,
+    var(--accent-mid)  75%,
+    var(--muted)       100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -45,46 +158,181 @@ button {
   animation: shine 4s linear infinite;
 }
 
-.hero-metallic {
+/* Hero ambient glow */
+.hero-glow {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  animation: drift 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Utility */
+.cursor { animation: blink 1.2s step-end infinite; }
+
+.status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
   display: inline-block;
-  background: linear-gradient(
-    110deg,
-    #292f36 0%,
-    #4a4e55 25%,
-    #dddedf 50%,
-    #4a4e55 75%,
-    #292f36 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: shine 12s linear infinite;
+  animation: pulse-soft 2.5s ease infinite;
+  flex-shrink: 0;
 }
 
-.dark .hero-metallic {
-  background: linear-gradient(
-    110deg,
-    #f3f4f6 0%,
-    #d1d5db 25%,
-    #9ca3af 50%,
-    #e5e7eb 75%,
-    #f3f4f6 100%
-  );
+/* Section label */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--accent-dim);
 }
 
+/* Glow card */
+.glow-card {
+  border: 1px solid var(--border);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.25s;
+}
+.glow-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 32px var(--accent-glow), 0 8px 36px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Tech chip */
+.tech-chip {
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 3px;
+  background: var(--accent-pale);
+  border: 1px solid var(--border-hover);
+  color: var(--accent-dim);
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  opacity: 0.8;
+}
+.glow-card:hover .tech-chip {
+  opacity: 1;
+  color: var(--accent-mid);
+}
+
+/* Skill bar */
+.skill-track {
+  height: 2px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent-mid));
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Project card grid effects */
 .group\/card-grid:hover .card:not(:hover) .card-background,
 .group\/card-grid:hover .card:not(:hover) .card-category {
   filter: brightness(0.8) contrast(1.2) blur(4px);
   transition: all 0.5s ease;
 }
-
-.group\/card-grid:hover .card:not(:hover){
+.group\/card-grid:hover .card:not(:hover) {
   transform: scale(0.95) translateZ(0);
-  transition: all 0.5s ease; 
+  transition: all 0.5s ease;
 }
-
 .card:hover .card-background {
   transform: scale(1.15) translateZ(0);
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 0.22em;
+}
+.scroll-indicator-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, var(--muted), transparent);
+}
+
+/* Form inputs */
+.form-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-input:focus {
+  border-color: var(--border-hover);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+.form-input::placeholder { color: var(--muted2); }
+
+/* Buttons */
+.btn-primary {
+  padding: 10px 26px;
+  border-radius: 6px;
+  border: 1px solid var(--border-hover);
+  color: var(--accent-mid);
+  background: var(--accent-pale);
+  cursor: pointer;
+  transition: all 0.25s;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.btn-primary:hover {
+  background: rgba(77, 127, 255, 0.14);
+  border-color: var(--accent-mid);
+  box-shadow: 0 0 20px var(--accent-glow);
+  color: var(--accent-soft);
+}
+.btn-ghost {
+  padding: 10px 26px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.btn-ghost:hover {
+  border-color: var(--muted2);
+  color: var(--text);
+}
+
+/* ThemeToggle + Hamburger shared hover */
+.theme-toggle-btn:hover {
+  border-color: var(--border-hover) !important;
+  box-shadow: 0 0 12px var(--accent-glow);
 }

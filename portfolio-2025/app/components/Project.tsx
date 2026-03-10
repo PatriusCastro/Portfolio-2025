@@ -1,92 +1,277 @@
 "use client";
+
 import { useState } from "react";
-import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 const projects = [
   {
     title: "iRenta",
     description:
-      "A comprehensive platform designed to simplify the management and search of rental properties.",
+      "A comprehensive platform to simplify the management and search of rental properties. Built for landlords and tenants alike.",
     imageUrl: "/images/iRenta.png",
     repoUrl: "https://github.com/Takezooo/irenta",
+    liveUrl: "",
     technologies: ["React", "Node.js", "MongoDB"],
+    live: true,
+    year: "2024",
   },
   {
     title: "Kababayan Rice",
     description:
-      "An e-commerce website for a rice business, featuring product listings, shopping cart, and secure checkout.",
+      "E-commerce platform for a local rice business. Features product listings, cart management, and a streamlined checkout flow.",
     imageUrl: "/images/Kababayan.png",
     repoUrl: "https://github.com/SandorTheMoon/KabayanRicePrototype",
+    liveUrl: "",
     technologies: ["JavaScript", "Django", "MySQL"],
+    live: true,
+    year: "2023",
   },
   {
     title: "Patfolio Website",
     description:
-      "A personal portfolio website that I developed during my college years to showcase my projects and skills.",
+      "Personal portfolio site built during college. A snapshot of early-career frontend work and design exploration.",
     imageUrl: "/images/Patfolio.png",
     repoUrl: "https://github.com/PatriusCastro/Patfolio",
-    technologies: ["HTML", "CSS", "Javascript"],
+    liveUrl: "",
+    technologies: ["HTML", "CSS", "JavaScript"],
+    live: false,
+    year: "2022",
   },
 ];
 
+function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 12,
+        overflow: "hidden",
+        border: "1px solid",
+        borderColor: hovered ? "var(--border-hover)" : "var(--border)",
+        background: "var(--surface)",
+        boxShadow: hovered ? "0 0 32px var(--accent-glow), 0 8px 36px rgba(0,0,0,0.2)" : "none",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        transition: "border-color 0.3s, box-shadow 0.3s, transform 0.3s",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Image */}
+      <div style={{ position: "relative", overflow: "hidden", height: 180 }}>
+        <img
+          src={project.imageUrl}
+          alt={project.title}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transform: hovered ? "scale(1.06)" : "scale(1)",
+            transition: "transform 0.5s ease",
+          }}
+        />
+        {/* Overlay on hover */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to bottom, rgba(0,0,139,0.15), rgba(0,0,0,0.55))",
+            opacity: hovered ? 1 : 0,
+            transition: "opacity 0.3s",
+          }}
+        />
+        {/* Year badge */}
+        <div
+          style={{
+            position: "absolute",
+            top: 12,
+            left: 12,
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            letterSpacing: "0.1em",
+            padding: "3px 8px",
+            borderRadius: 3,
+            background: "rgba(0,0,0,0.5)",
+            backdropFilter: "blur(6px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "rgba(255,255,255,0.6)",
+          }}
+        >
+          {project.year}
+        </div>
+        {/* Status badge */}
+        <div
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            fontFamily: "var(--font-mono)",
+            fontSize: 9,
+            letterSpacing: "0.12em",
+            padding: "3px 8px",
+            borderRadius: 3,
+            background: "rgba(0,0,0,0.5)",
+            backdropFilter: "blur(6px)",
+            border: "1px solid",
+            borderColor: project.live ? "rgba(0,180,90,0.4)" : "rgba(255,255,255,0.1)",
+            color: project.live ? "var(--green)" : "rgba(255,255,255,0.4)",
+          }}
+        >
+          {project.live ? "LIVE" : "ARCHIVED"}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
+        <h3 style={{ fontWeight: 700, fontSize: 17, color: "var(--text)", letterSpacing: "-0.01em" }}>
+          {project.title}
+        </h3>
+
+        <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7, flex: 1 }}>
+          {project.description}
+        </p>
+
+        {/* Tech chips */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {project.technologies.map(tech => (
+            <span key={tech} className="tech-chip">{tech}</span>
+          ))}
+        </div>
+
+        {/* Actions */}
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            paddingTop: 12,
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          <a
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 6,
+              padding: "8px 0",
+              borderRadius: 6,
+              border: "1px solid var(--border)",
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.06em",
+              color: "var(--muted)",
+              textDecoration: "none",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)";
+              (e.currentTarget as HTMLElement).style.color = "var(--accent-mid)";
+              (e.currentTarget as HTMLElement).style.background = "rgba(0,0,139,0.06)";
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+              (e.currentTarget as HTMLElement).style.color = "var(--muted)";
+              (e.currentTarget as HTMLElement).style.background = "transparent";
+            }}
+          >
+            <FaGithub size={13} /> Source Code
+          </a>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+                padding: "8px 14px",
+                borderRadius: 6,
+                border: "1px solid rgba(0,0,139,0.4)",
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                letterSpacing: "0.06em",
+                color: "var(--accent-mid)",
+                background: "rgba(0,0,139,0.07)",
+                textDecoration: "none",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(0,0,139,0.14)";
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.background = "rgba(0,0,139,0.07)";
+              }}
+            >
+              <FaExternalLinkAlt size={11} /> Live
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Project() {
   return (
-    <section className="min-h-[85vh] py-[4rem] px-6 sm:px-0 flex flex-col justify-center items-center">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
-          Featured Projects
-        </h2>
-        <p className="text-sm sm:text-md xl:text-base mb-6">
-            Here are some of the projects I've worked on recently. Feel free to
-            explore the code!
-        </p>
-      </div>
-      <div className="grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 w-full group/card-grid">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="relative card group/card rounded-2xl overflow-hidden shadow border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg transition-all duration-500"
-          >
-            {/* Image */}
-            <div className="card-background overflow-hidden">
-              <img
-                src={project.imageUrl}
-                alt={project.title}
-                className="w-full h-56 object-cover transition-transform duration-500 group-hover/card:scale-110"
-              />
-            </div>
-
-            {/* Content */}
-            <div className="p-6 card-category transition duration-500">
-              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-              <p className="text-sm mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="text-xs bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-2 py-1 rounded-full"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div className="flex justify-between gap-4">
-                {project.repoUrl && (
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="border dark:border-slate-700 border-slate-300 hover:bg-gradient-to-t hover:from-blue-700 hover:to-blue-500 justify-center rounded-xl w-full py-1.5 text-slate-700 dark:text-slate-200 hover:text-white flex items-center gap-2 transition-colors duration-300"
-                  >
-                    Source Code <FaGithub />
-                  </a>
-                )}
-              </div>
-            </div>
+    <section id="projects" className="py-16 px-6 sm:px-0 mb-16">
+      {/* Header */}
+      <div className="mb-12">
+        <div className="section-label">projects</div>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+          <div>
+            <h2
+              className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2"
+              style={{ color: "var(--text)" }}
+            >
+              Featured Projects
+            </h2>
+            <p className="text-sm max-w-md leading-relaxed" style={{ color: "var(--muted)" }}>
+              A selection of things I've built — hover a card to explore.
+            </p>
           </div>
+          <a
+            href="https://github.com/PatriusCastro"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.08em",
+              color: "var(--muted)",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              whiteSpace: "nowrap",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--accent-mid)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+          >
+            View all on GitHub →
+          </a>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, index) => (
+          <ProjectCard key={project.title} project={project} index={index} />
         ))}
       </div>
-
     </section>
   );
 }

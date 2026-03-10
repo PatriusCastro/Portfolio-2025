@@ -12,7 +12,9 @@ export default async function Home() {
   const { projectCount, stars } = await getGithubStats();
 
   return (
-    <main className="md:px-[2rem] lg:px-[4rem] xl:px-[10rem] bg-linear-135 from-white to-slate-200 text-slate-900 dark:text-slate-200 dark:bg-linear-135 dark:from-slate-950 dark:to-slate-900 transition-colors duration-300">
+    <main
+      className="min-h-[100vh] relative z-10 md:px-[2rem] lg:px-[4rem] xl:px-[10rem]"
+    >
       <Navbar />
       <Hero />
       <FadeInSection delay={0.1}><Stats projectCount={projectCount} stars={stars} /></FadeInSection>
@@ -20,7 +22,9 @@ export default async function Home() {
       <FadeInSection delay={0.3}><Skills /></FadeInSection>
       <FadeInSection delay={0.4}><Project /></FadeInSection>
       <FadeInSection delay={0.5}><Contact /></FadeInSection>
-      <footer className="mt-12 py-6 px-4 sm:px-6 md:px-12 w-full mx-auto text-center text-sm text-slate-600 dark:text-slate-400">
+      <footer
+        className="mt-12 py-6 px-4 text-center text-xs font-[var(--font-mono)] font-[var(--muted2)]"
+      >
         &copy; {new Date().getFullYear()} Patrius Castro. All rights reserved.
       </footer>
     </main>

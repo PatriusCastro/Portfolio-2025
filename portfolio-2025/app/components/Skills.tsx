@@ -1,135 +1,187 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "framer-motion";
 import {
-  SiReact,
-  SiNextdotjs,
-  SiTypescript,
-  SiTailwindcss,
-  SiJavascript,
-  SiHtml5,
-  SiCss3,
-  SiNodedotjs,
-  SiPhp,
-  SiLaravel,
-  SiPython,
-  SiDjango,
-  SiMysql,
-  SiMongodb,
-  SiGit,
-  SiDocker,
-  SiFigma,
-  SiWordpress,
-  SiC,
-  SiCplusplus,
-  SiPostgresql,
-  SiGithub,
-  SiJira
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript,
+  SiHtml5, SiCss3, SiNodedotjs, SiLaravel, SiPython, SiDjango,
+  SiMysql, SiMongodb, SiGit, SiDocker, SiFigma, SiWordpress,
+  SiC, SiCplusplus, SiPostgresql, SiGithub, SiJira
 } from "react-icons/si";
 
-const skillGroups: Record<
-  string,
-  { name: string; icon: React.ReactNode }[]
-> = {
-  Languages: [
-    { name: "TypeScript", icon: <SiTypescript /> },
-    { name: "JavaScript", icon: <SiJavascript /> },
-    { name: "HTML", icon: <SiHtml5 /> },
-    { name: "CSS", icon: <SiCss3 /> },
-    { name: "C", icon: <SiC /> },
-    { name: "C++", icon: <SiCplusplus /> },
-    { name: "Python", icon: <SiPython /> },
+type Skill = { name: string; icon: React.ReactNode; level: number };
 
+const skillGroups: Record<string, Skill[]> = {
+  Languages: [
+    { name: "TypeScript", icon: <SiTypescript />, level: 88 },
+    { name: "JavaScript", icon: <SiJavascript />, level: 90 },
+    { name: "HTML",       icon: <SiHtml5 />,      level: 95 },
+    { name: "CSS",        icon: <SiCss3 />,        level: 92 },
+    { name: "Python",     icon: <SiPython />,      level: 68 },
+    { name: "C",          icon: <SiC />,           level: 60 },
+    { name: "C++",        icon: <SiCplusplus />,   level: 58 },
   ],
   Frameworks: [
-    { name: "Laravel", icon: <SiLaravel /> },
-    { name: "Node.js", icon: <SiNodedotjs /> },
-    { name: "React.js", icon: <SiReact /> },
-    { name: "Next.js", icon: <SiNextdotjs /> },
-    { name: "Django", icon: <SiDjango /> },
-    { name: "Tailwind", icon: <SiTailwindcss /> },
-    
+    { name: "React.js",  icon: <SiReact />,       level: 92 },
+    { name: "Next.js",   icon: <SiNextdotjs />,   level: 88 },
+    { name: "Tailwind",  icon: <SiTailwindcss />, level: 90 },
+    { name: "Node.js",   icon: <SiNodedotjs />,   level: 78 },
+    { name: "Laravel",   icon: <SiLaravel />,     level: 72 },
+    { name: "Django",    icon: <SiDjango />,      level: 68 },
   ],
   Databases: [
-    { name: "MySQL", icon: <SiMysql /> },
-    { name: "MongoDB", icon: <SiMongodb /> },
-    { name: "PostgreSQL", icon: <SiPostgresql /> },
+    { name: "MySQL",      icon: <SiMysql />,      level: 80 },
+    { name: "MongoDB",    icon: <SiMongodb />,    level: 74 },
+    { name: "PostgreSQL", icon: <SiPostgresql />, level: 70 },
   ],
   Tools: [
-    { name: "Git", icon: <SiGit /> },
-    { name: "GitHub", icon: <SiGithub /> },
-    { name: "Docker", icon: <SiDocker /> },
-    { name: "Figma", icon: <SiFigma /> },
-    { name: "WordPress", icon: <SiWordpress /> },
-    { name: "Jira", icon: <SiJira /> }
+    { name: "Git",       icon: <SiGit />,        level: 90 },
+    { name: "GitHub",    icon: <SiGithub />,     level: 90 },
+    { name: "Docker",    icon: <SiDocker />,     level: 65 },
+    { name: "Figma",     icon: <SiFigma />,      level: 75 },
+    { name: "WordPress", icon: <SiWordpress />,  level: 72 },
+    { name: "Jira",      icon: <SiJira />,       level: 70 },
   ],
 };
 
-export default function Skills() {
-  const [activeGroup, setActiveGroup] = useState("Languages");
+const groupDescriptions: Record<string, string> = {
+  Languages:  "Core languages I write daily — from typed JS to systems-level C.",
+  Frameworks: "Full-stack frameworks and UI libraries I use to ship products.",
+  Databases:  "Relational and NoSQL databases for designing scalable data layers.",
+  Tools:      "Dev tools for version control, containerization, design, and planning.",
+};
+
+// Single skill tile — shows icon + name, reveals bar on hover
+function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="py-16 px-6 sm:rounded-2xl border border-slate-300 dark:border-slate-800 bg-white/80 dark:bg-slate-800/30 backdrop-blur-lg shadow-sm transition-colors duration-300">
-      {/* Title */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl uppercase sm:text-5xl font-bold mb-4">
-          Technologies I Use
-        </h2>
-        <p className="text-slate-600 text-sm sm:text-base dark:text-slate-300 max-w-2xl mx-auto">
-          These are the tools and technologies I use to design, build, and
-          deploy modern web applications across frontend, backend, and more.
-        </p>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "14px 16px",
+        borderRadius: 8,
+        border: "1px solid",
+        borderColor: hovered ? "var(--border-hover)" : "var(--border)",
+        background: hovered ? "rgba(0,0,139,0.06)" : "var(--surface2)",
+        transition: "border-color 0.2s, background 0.2s",
+        cursor: "default",
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+      }}
+    >
+      {/* Icon + name row */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ fontSize: 18, color: hovered ? "var(--accent-mid)" : "var(--accent-dim)", transition: "color 0.2s" }}>
+          {skill.icon}
+        </span>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--text)", letterSpacing: "0.02em" }}>
+          {skill.name}
+        </span>
+        {/* Level label — slides in on hover */}
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            color: "var(--accent-mid)",
+            marginLeft: "auto",
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? "translateX(0)" : "translateX(6px)",
+            transition: "opacity 0.2s, transform 0.2s",
+          }}
+        >
+          {skill.level}%
+        </span>
       </div>
 
-      {/* Toggle Tabs */}
-      <div className="grid grid-cols-2 sm:flex justify-center gap-2 sm:gap-4 mb-12">
-        {Object.keys(skillGroups).map((group) => (
-          <button
-            key={group}
-            onClick={() => setActiveGroup(group)}
-            className={`px-4 py-2 rounded-xl text-base font-medium transition-all 
-              ${
-                activeGroup === group
-                  ? "bg-blue-700 text-white dark:bg-slate-200 dark:text-slate-900"
-                  : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-              }`}
-          >
-            {group}
-          </button>
-        ))}
+      {/* Skill bar — always rendered, only fills on hover + animated */}
+      <div style={{ height: 2, background: "var(--border)", borderRadius: 2, overflow: "hidden" }}>
+        <div
+          style={{
+            height: "100%",
+            borderRadius: 2,
+            background: "linear-gradient(90deg, var(--accent-dim), var(--accent-mid))",
+            width: hovered && animated ? `${skill.level}%` : "0%",
+            transition: "width 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+            boxShadow: "0 0 8px var(--accent-glow)",
+          }}
+        />
       </div>
+    </div>
+  );
+}
 
-      {/* Two-Column Layout */}
-      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-        {/* Left Column */}
+export default function Skills() {
+  const [activeGroup, setActiveGroup] = useState("Languages");
+  const [animated, setAnimated]       = useState(false);
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => { if (inView) setAnimated(true); }, [inView]);
+
+  return (
+    <section
+      id="skills"
+      ref={ref}
+      className="py-14 px-6 sm:px-10 sm:rounded-2xl mb-16"
+      style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
+    >
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <div>
-          <h5 className="text-2xl font-semibold mb-4 text-slate-800 dark:text-slate-100">
-            {activeGroup}
-          </h5>
-          <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base">
-            {activeGroup === "Languages" &&
-              "Proficient in modern programming languages for building dynamic and responsive web applications."} 
-            {activeGroup === "Frameworks" &&
-              "Knowledgeable in popular frameworks and libraries for efficient full stack development."}
-            {activeGroup === "Databases" &&
-              "Experienced in relational and NoSQL databases for managing data effectively."}
-            {activeGroup === "Tools" &&
-              "Proficient with essential tools for version control, containerization, design, and CMS management."}
+          <div className="section-label">skills</div>
+          <h2
+            className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2"
+            style={{ color: "var(--text)" }}
+          >
+            Technologies I Use
+          </h2>
+          <p className="text-sm max-w-sm leading-relaxed" style={{ color: "var(--muted)" }}>
+            {groupDescriptions[activeGroup]}
           </p>
         </div>
 
-        {/* Right Column */}
-        <div className="md:col-span-2 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-          {skillGroups[activeGroup].map((skill, i) => (
-            <div
-              key={i}
-              className="flex h-fit justify-between items-center gap-2 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-gradient-to-r hover:from-slate-100 hover:to-slate-300 hover:text-slate-950 dark:hover:bg-gradient-to-r dark:hover:from-slate-500 dark:hover:to-slate-800 dark:hover:text-white transition-colors duration-300 cursor-pointer"
+        {/* Tab strip — right-aligned on desktop */}
+        <div className="flex flex-wrap gap-2 shrink-0">
+          {Object.keys(skillGroups).map(group => (
+            <button
+              key={group}
+              onClick={() => setActiveGroup(group)}
+              className="px-4 py-1.5 rounded text-xs transition-all duration-200"
+              style={{
+                fontFamily: "var(--font-mono)",
+                letterSpacing: "0.06em",
+                border: "1px solid",
+                borderColor: activeGroup === group ? "rgba(0,0,139,0.45)" : "var(--border)",
+                background:   activeGroup === group ? "rgba(0,0,139,0.08)" : "transparent",
+                color:        activeGroup === group ? "var(--accent-mid)" : "var(--muted)",
+              }}
             >
-              <span className="text-xl">{skill.icon}</span>
-              <span className="text-sm font-medium cursor-pointer">{skill.name}</span>
-            </div>
+              {group}
+            </button>
           ))}
         </div>
+      </div>
+
+      {/* Skill grid — fixed height so layout never shifts */}
+      <div style={{ minHeight: 280 }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeGroup}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+          >
+            {skillGroups[activeGroup].map(skill => (
+              <SkillTile key={skill.name} skill={skill} animated={animated} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
