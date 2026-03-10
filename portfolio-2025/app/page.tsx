@@ -5,6 +5,7 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import Project from "./components/Project";
 import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 import { getGithubStats } from "./lib/github";
 import FadeInSection from "./components/FadeInSection";
 
@@ -22,11 +23,7 @@ export default async function Home() {
       <FadeInSection delay={0.3}><Skills /></FadeInSection>
       <FadeInSection delay={0.4}><Project /></FadeInSection>
       <FadeInSection delay={0.5}><Contact /></FadeInSection>
-      <footer
-        className="mt-12 py-6 px-4 text-center text-xs font-[var(--font-mono)] text-[var(--muted2)]"
-      >
-        &copy; {new Date().getFullYear()} Patrius Castro. All rights reserved.
-      </footer>
+      <Footer />
     </main>
   );
 }
