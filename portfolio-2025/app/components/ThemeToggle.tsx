@@ -10,7 +10,6 @@ export default function ThemeToggle() {
   const [pressed, setPressed] = useState(false);
 
   useEffect(() => setMounted(true), []);
-  // Reserve space while unmounted so layout doesn't shift
   if (!mounted) return <div className="w-34 h-34 radius-8 shrink-0"/>;
 
   const isDark = theme === "dark";
@@ -40,10 +39,8 @@ export default function ThemeToggle() {
         outline: "none",
         flexShrink: 0,
         overflow: "hidden",
-        /* ✅ Pure CSS-var transitions — no inline hover handlers needed */
         transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
       }}
-      /* ✅ className-based hover via Tailwind so vars resolve at call time */
       className="theme-toggle-btn"
     >
       {/* Ripple on click */}

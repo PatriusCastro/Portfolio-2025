@@ -94,7 +94,7 @@ export default function Skills() {
       ref={ref}
       className="py-14 px-6 sm:px-10 sm:rounded-2xl mb-20 bg-[var(--surface)] border border-[var(--border)]"
     >
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
         <div>
           <div className="section-label">skills</div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 text-[var(--text)]">Technologies I Use</h2>

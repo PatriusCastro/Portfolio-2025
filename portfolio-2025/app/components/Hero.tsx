@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const ROLES = ["Full-Stack Developer", "Frontend Specialist", "UI Craftsman", "React Engineer"];
+const ROLES = ["Full-Stack Developer", "Frontend Specialist", "UI/UX Designer", "React Engineer"];
 
 function useTypewriter(texts: string[], speed = 65, pause = 2400) {
   const [displayed, setDisplayed] = useState("");
