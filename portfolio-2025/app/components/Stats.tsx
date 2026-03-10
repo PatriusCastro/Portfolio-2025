@@ -42,7 +42,7 @@ export default function Stats({ projectCount, stars }: StatsProps) {
   const statValues = ["1+", `${projects}+`, `${repoStars}`, "100+"];
 
   return (
-    <section ref={sectionRef} className="mb-20 rounded-xl overflow-hidden border border-[var(--border)]">
+    <section ref={sectionRef} className="mb-20 sm:rounded-xl overflow-hidden border border-[var(--border)]">
       <div className="grid grid-cols-2 sm:grid-cols-4">
         {statValues.map((val, i) => (
           <a
