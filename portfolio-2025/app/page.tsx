@@ -23,7 +23,7 @@ export default async function Home() {
       <FadeInSection delay={0.4}><Project /></FadeInSection>
       <FadeInSection delay={0.5}><Contact /></FadeInSection>
       <footer
-        className="mt-12 py-6 px-4 text-center text-xs font-[var(--font-mono)] font-[var(--muted2)]"
+        className="mt-12 py-6 px-4 text-center text-xs font-[var(--font-mono)] text-[var(--muted2)]"
       >
         &copy; {new Date().getFullYear()} Patrius Castro. All rights reserved.
       </footer>

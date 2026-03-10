@@ -21,7 +21,6 @@ export default function Navbar() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     setScrollPct(max > 0 ? (top / max) * 100 : 0);
     setScrolled(top > 20);
-    // If we're at the bottom of the page, force the last section active
     const atBottom = window.innerHeight + top >= document.documentElement.scrollHeight - 10;
     if (atBottom) {
       setActiveLink(NAV_LINKS[NAV_LINKS.length - 1]);
@@ -54,7 +53,6 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Close drawer whenever we switch to desktop
   useEffect(() => {
     if (!isMobile) setMenuOpen(false);
   }, [isMobile]);
@@ -68,7 +66,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Scroll progress bar — width must be inline (runtime %) */}
+      {/* Scroll progress bar */}
       <div
         className="fixed top-0 left-0 h-0.5 z-[100] transition-[width] duration-100
                    bg-[linear-gradient(90deg,var(--accent-dim),var(--accent-mid))]
@@ -92,9 +90,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <button
-          className="group font-bold text-sm hover:opacity-75 transition-opacity duration-200
-                     bg-transparent border-0 p-0 cursor-pointer
-                     font-[var(--font-mono)] text-[var(--text)]"
+          className="group text-sm hover:opacity-75 transition-opacity duration-200 bg-transparent border-0 p-0 cursor-pointer font-[var(--font-mono)] text-[var(--text)]"
           aria-label="Scroll to top"
           onClick={() => { router.push("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
         >
@@ -120,7 +116,7 @@ export default function Navbar() {
                   "uppercase no-underline transition-colors duration-200",
                   isActive
                     ? "text-[var(--text)] bg-[var(--accent-pale)]"
-                    : "text-[var(--muted)] hover:text-[var(--accent-mid)] bg-transparent",
+                    : "text-[var(--text-sub)] hover:text-[var(--accent-mid)] bg-transparent",
                 ].join(" ")}
               >
                 {isActive && (
@@ -140,15 +136,14 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-2.5">
           {/* Clock */}
-          <div className="hidden sm:flex items-center gap-2
-                          font-[var(--font-mono)] text-[10px] text-[var(--muted2)]">
+          <div className="hidden sm:flex items-center gap-2 font-[var(--font-mono)] text-[10px] text-[var(--text-sub)]">
             <span className="status-dot" />
             {time}
           </div>
 
           <ThemeToggle />
 
-          {/* Hamburger — mobile only */}
+          {/* Hamburger */}
           <motion.button
             className={[
               "sm:hidden flex items-center justify-center",
@@ -191,7 +186,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile drawer — only mounts when drawerVisible (menuOpen AND isMobile) */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {drawerVisible && (
           <>
