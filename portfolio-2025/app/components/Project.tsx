@@ -16,6 +16,16 @@ const projects = [
     year: "2025",
   },
   {
+    title: "Request Management System",
+    description: "A web-based application designed to streamline the handling of various requests within an organization. It provides a centralized platform for users to submit, track, and manage their requests efficiently.",
+    imageUrl: "/images/Req-Management.png",
+    repoUrl: "https://github.com/markdonnie/purchase-request",
+    liveUrl: "",
+    technologies: ["Laravel", "PHP", "MySQL"],
+    live: false,
+    year: "2025",
+  },
+  {
     title: "iRenta",
     description: "A comprehensive platform to simplify the management and search of rental properties. Built for landlords and tenants alike.",
     imageUrl: "/images/iRenta.png",
