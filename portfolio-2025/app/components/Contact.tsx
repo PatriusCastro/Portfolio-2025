@@ -36,16 +36,16 @@ export default function Contact() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between px-4 py-3 rounded-xl border border-[var(--border)] no-underline transition-all duration-200 hover:bg-[rgba(0,0,139,0.05)] hover:border-[var(--border-hover)]"
+                className="flex items-center justify-between gap-2 px-4 py-3 rounded-xl border border-[var(--border)] no-underline transition-all duration-200 hover:bg-[rgba(0,0,139,0.05)] hover:border-[var(--border-hover)] min-w-0 overflow-hidden"
               >
-                <div className="flex items-center gap-3">
-                  <span className="p-2 rounded-lg bg-[rgba(0,0,139,0.07)] text-[var(--accent-dim)]">{s.icon}</span>
-                  <div>
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="p-2 rounded-lg bg-[rgba(0,0,139,0.07)] text-[var(--accent-dim)] shrink-0">{s.icon}</span>
+                  <div className="min-w-0">
                     <div className="text-sm font-semibold text-[var(--text)]">{s.label}</div>
-                    <div className="text-xs text-[var(--muted)]">{s.sub}</div>
+                    <div className="text-xs text-[var(--muted)] truncate" title={s.sub}>{s.sub}</div>
                   </div>
                 </div>
-                <FiExternalLink size={13} className="text-[var(--muted2)]" />
+                <FiExternalLink size={13} className="text-[var(--muted2)] shrink-0 ml-auto" />
               </a>
             ))}
           </div>

@@ -6,7 +6,7 @@ import {
   SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript,
   SiHtml5, SiCss3, SiNodedotjs, SiLaravel, SiPython, SiDjango,
   SiMysql, SiMongodb, SiGit, SiDocker, SiFigma, SiWordpress,
-  SiC, SiCplusplus, SiPostgresql, SiGithub, SiJira
+  SiC, SiCplusplus, SiPostgresql, SiGithub, SiJira, SiPostman
 } from "react-icons/si";
 
 type Skill = { name: string; icon: React.ReactNode; level: number };
@@ -31,8 +31,8 @@ const skillGroups: Record<string, Skill[]> = {
   ],
   Databases: [
     { name: "MySQL",      icon: <SiMysql />,      level: 80 },
-    { name: "MongoDB",    icon: <SiMongodb />,    level: 74 },
-    { name: "PostgreSQL", icon: <SiPostgresql />, level: 70 },
+    { name: "MongoDB",    icon: <SiMongodb />,    level: 80 },
+    { name: "PostgreSQL", icon: <SiPostgresql />, level: 85 },
   ],
   Tools: [
     { name: "Git",       icon: <SiGit />,        level: 90 },
@@ -41,6 +41,7 @@ const skillGroups: Record<string, Skill[]> = {
     { name: "Figma",     icon: <SiFigma />,      level: 75 },
     { name: "WordPress", icon: <SiWordpress />,  level: 72 },
     { name: "Jira",      icon: <SiJira />,       level: 70 },
+    { name: "Postman",   icon: <SiPostman />,    level: 68 },
   ],
 };
 
@@ -61,12 +62,17 @@ function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
       className={`p-3.5 rounded-lg border flex flex-col gap-2.5 cursor-default transition-all duration-200
         ${hovered ? "border-[var(--border-hover)] bg-[rgba(0,0,139,0.06)]" : "border-[var(--border)] bg-[var(--surface2)]"}`}
     >
-      <div className="flex items-center gap-2.5">
-        <span className={`text-[18px] transition-colors duration-200 ${hovered ? "text-[var(--accent-mid)]" : "text-[var(--accent-dim)]"}`}>
+      <div className="flex items-center gap-2.5 min-w-0">
+        <span className={`text-[18px] shrink-0 transition-colors duration-200 ${hovered ? "text-[var(--accent-mid)]" : "text-[var(--accent-dim)]"}`}>
           {skill.icon}
         </span>
-        <span className="font-mono text-[12px] text-[var(--text)] tracking-wide">{skill.name}</span>
-        <span className={`font-mono text-[10px] text-[var(--accent-mid)] ml-auto transition-all duration-200 ${hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1.5"}`}>
+        <span
+          className="font-mono text-[12px] text-[var(--text)] tracking-wide truncate"
+          title={skill.name}
+        >
+          {skill.name}
+        </span>
+        <span className={`font-mono text-[10px] text-[var(--accent-mid)] ml-auto shrink-0 transition-all duration-200 ${hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1.5"}`}>
           {skill.level}%
         </span>
       </div>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+
+const INITIAL_COUNT = 3;
 
 const projects = [
   {
@@ -17,7 +19,7 @@ const projects = [
   },
   {
     title: "Request Management System",
-    description: "A web-based application designed to streamline the handling of various requests within an organization. It provides a centralized platform for users to submit, track, and manage their requests efficiently.",
+    description: "A web-based application designed to streamline the handling of various requests within an organization.",
     imageUrl: "/images/Req-Management.png",
     repoUrl: "https://github.com/markdonnie/purchase-request",
     liveUrl: "",
@@ -63,9 +65,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 16 }}
+      transition={{ duration: 0.4, delay: index * 0.07 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`rounded-xl overflow-hidden flex flex-col border transition-all duration-300 bg-[var(--surface)]
@@ -98,20 +100,22 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
         </div>
 
         <div className="flex gap-2 pt-3 border-t border-[var(--border)]">
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-[var(--border)] font-mono text-[11px] tracking-wide text-[var(--muted)] no-underline transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[rgba(0,0,139,0.06)]"
-          >
-            <FaGithub size={13} /> Source Code
-          </a>
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-[var(--border)] font-mono text-[11px] tracking-wide text-[var(--muted)] no-underline transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[rgba(0,0,139,0.06)]"
+            >
+              <FaGithub size={13} /> Source Code
+            </a>
+          )}
           {project.liveUrl && (
             <a
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-md border border-[rgba(0,0,139,0.4)] font-mono text-[11px] tracking-wide text-[var(--accent-mid)] bg-[rgba(0,0,139,0.07)] no-underline transition-all duration-200 hover:bg-[rgba(0,0,139,0.14)]"
+              className="flex flex-1 items-center justify-center gap-1.5 px-4 py-2 rounded-md border border-[rgba(0,0,139,0.4)] font-mono text-[11px] tracking-wide text-[var(--accent-mid)] bg-[rgba(0,0,139,0.07)] no-underline transition-all duration-200 hover:bg-[rgba(0,0,139,0.14)]"
             >
               <FaExternalLinkAlt size={11} /> Live
             </a>
@@ -123,6 +127,10 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 }
 
 export default function Project() {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? projects : projects.slice(0, INITIAL_COUNT);
+  const remaining = projects.length - INITIAL_COUNT;
+
   return (
     <section id="projects" className="py-20 px-6 sm:px-0 mb-20">
       <div className="mb-12">
@@ -144,10 +152,25 @@ export default function Project() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, index) => (
-          <ProjectCard key={project.title} project={project} index={index} />
-        ))}
+        <AnimatePresence mode="popLayout" initial={false}>
+          {visible.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </AnimatePresence>
       </div>
+
+      {remaining > 0 && (
+        <div className="flex justify-center mt-10">
+          <button
+            onClick={() => setShowAll(prev => !prev)}
+            className="group font-mono text-[11px] tracking-widest px-6 py-2.5 rounded-md border border-[var(--border)] text-[var(--muted)] transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[rgba(0,0,139,0.06)]"
+          >
+            {showAll
+              ? "SHOW LESS ↑"
+              : `SHOW MORE · ${remaining} project${remaining > 1 ? "s" : ""} ↓`}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
