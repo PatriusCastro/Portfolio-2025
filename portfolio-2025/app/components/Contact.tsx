@@ -4,15 +4,36 @@ import { useState } from "react";
 import { SiGithub, SiInstagram, SiLinkedin } from "react-icons/si";
 import { FiExternalLink, FiMail } from "react-icons/fi";
 
-const socials = [
+export const socials = [
   { label: "Email",     sub: "josuahcastro1@gmail.com",           href: "mailto:josuahcastro1@gmail.com",                              icon: <FiMail size={18} /> },
   { label: "LinkedIn",  sub: "patrick-josuah-castro",             href: "https://www.linkedin.com/in/patrick-josuah-castro-6aba2a27a/", icon: <SiLinkedin size={18} /> },
   { label: "GitHub",    sub: "github.com/PatriusCastro",          href: "https://github.com/PatriusCastro",                            icon: <SiGithub size={18} /> },
   { label: "Instagram", sub: "@_patissss",                        href: "https://instagram.com/_patissss",                             icon: <SiInstagram size={18} /> },
 ];
 
-export default function Contact() {
+export const FORM_ACTION = "https://formspree.io/f/mpwjvezn";
+
+// Shared by the classic contact section and the desktop Mail window.
+export function useContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setStatus("sending");
+    try {
+      const res = await fetch(FORM_ACTION, {
+        method: "POST", body: new FormData(form), headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error(`Formspree ${res.status}`);
+      form.reset();
+      setStatus("sent");
+    } catch { setStatus("error"); }
+  };
+  return { status, onSubmit };
+}
+
+export default function Contact() {
+  const { status, onSubmit } = useContactForm();
 
   return (
     <section
@@ -53,22 +74,10 @@ export default function Contact() {
 
         {/* Right */}
         <form
-          action="https://formspree.io/f/mpwjvezn"
+          action={FORM_ACTION}
           method="POST"
           className="flex flex-col gap-5"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            const form = e.currentTarget;
-            setStatus("sending");
-            try {
-            const res = await fetch(form.action, {
-              method: "POST", body: new FormData(form), headers: { Accept: "application/json" },
-            });
-            if (!res.ok) throw new Error(`Formspree ${res.status}`);
-            form.reset();
-            setStatus("sent");
-            } catch { setStatus("error"); }
-          }}
+          onSubmit={onSubmit}
         >
           {[
             { id: "email",   label: "EMAIL",   type: "email", placeholder: "your@email.com" },

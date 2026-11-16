@@ -22,9 +22,9 @@ button {
   --accent-mid:    hsl(var(--accent-h), 80%, 48%);
   --accent-soft:   hsl(var(--accent-h), 70%, 68%);
   --accent-dim:    hsl(var(--accent-h), 65%, 38%);
-  --accent-pale:   rgba(0, 0, 200, 0.07);
+  --accent-pale:   rgba(0, 0, 200, 0.09);
   --accent-glow:   rgba(0, 0, 180, 0.16);
-  --border-hover:  rgba(0, 0, 200, 0.32);
+  --border-hover:  rgba(0, 0, 200, 0.5);
 
   /* Nav background (light) */
   --nav-bg-scrolled:   rgba(245, 246, 250, 0.88);
@@ -33,12 +33,12 @@ button {
   /* Light mode surfaces */
   --bg:       #f5f6fa;
   --surface:  #ffffff;
-  --surface2: #eef0f6;
-  --border:   rgba(0, 0, 0, 0.07);
+  --surface2: #e6e9f3;
+  --border:   rgba(0, 0, 0, 0.16);
   --text:     #0f1117;
-  --text-sub: #3a3f52;
-  --muted:    #5c6584;
-  --muted2:   #687089;
+  --text-sub: #2a2f42;
+  --muted:    #474f6b;
+  --muted2:   #555d7a;
   --green:    #087a40;
 }
 
@@ -46,23 +46,23 @@ button {
 [data-theme="dark"] {
   --accent-mid:    hsl(224, 90%, 68%);
   --accent-soft:   hsl(224, 85%, 78%);
-  --accent-dim:    hsl(224, 78%, 64%);
-  --accent-pale:   rgba(77, 127, 255, 0.09);
+  --accent-dim:    hsl(224, 85%, 72%);
+  --accent-pale:   rgba(77, 127, 255, 0.16);
   --accent-glow:   rgba(77, 127, 255, 0.22);
-  --border-hover:  rgba(77, 127, 255, 0.35);
+  --border-hover:  rgba(110, 150, 255, 0.6);
 
   --nav-bg-scrolled:   rgba(8, 11, 18, 0.88);
   --nav-bg-flat:       rgba(8, 11, 18, 0.0);
 
   --bg:       #080b12;
-  --surface:  #0d1120;
-  --surface2: #121726;
-  --border:   rgba(255, 255, 255, 0.07);
+  --surface:  #10152a;
+  --surface2: #19203a;
+  --border:   rgba(255, 255, 255, 0.16);
   --text:     #eef0f8;
-  --text-sub: #b0b8d0;
-  --muted:    #8a93b0;
-  --muted2:   #7e87a4;
-  --green:    #4a9a6a;
+  --text-sub: #c9cfe4;
+  --muted:    #a7afca;
+  --muted2:   #969ebb;
+  --green:    #5fd08f;
 }
 
 /* Background & layout */
@@ -315,8 +315,8 @@ body {
 .btn-ghost {
   padding: 10px 26px;
   border-radius: 6px;
-  border: 1px solid var(--border);
-  color: var(--muted);
+  border: 1px solid var(--muted2);
+  color: var(--text-sub);
   background: transparent;
   cursor: pointer;
   transition: all 0.25s;
@@ -350,3 +350,49 @@ section[id] { scroll-margin-top: 90px; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Desktop wallpaper: slow-drifting colour fields under a film of static noise */
+:root {
+  --wp-a: hsla(228, 100%, 60%, 0.22);
+  --wp-b: hsla(262, 90%, 62%, 0.16);
+  --wp-c: hsla(196, 95%, 50%, 0.16);
+  --wp-noise: 0.10;
+}
+[data-theme="dark"] {
+  --wp-a: hsla(224, 100%, 62%, 0.38);
+  --wp-b: hsla(262, 85%, 60%, 0.28);
+  --wp-c: hsla(196, 95%, 55%, 0.20);
+  --wp-noise: 0.14;
+}
+.wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.wallpaper::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(38% 42% at 24% 30%, var(--wp-a), transparent 70%),
+    radial-gradient(34% 44% at 76% 66%, var(--wp-b), transparent 70%),
+    radial-gradient(28% 30% at 62% 18%, var(--wp-c), transparent 70%);
+  filter: blur(40px);
+  animation: wallpaper-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.wallpaper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--wp-noise);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes wallpaper-drift {
+  0%   { transform: translate3d(-5%, -3%, 0) rotate(0deg)  scale(1); }
+  50%  { transform: translate3d(4%, 5%, 0)   rotate(10deg) scale(1.12); }
+  100% { transform: translate3d(6%, -4%, 0)  rotate(-8deg) scale(1.05); }
+}
+

@@ -11,7 +11,7 @@ import {
 
 type Skill = { name: string; icon: React.ReactNode; level: number };
 
-const skillGroups: Record<string, Skill[]> = {
+export const skillGroups: Record<string, Skill[]> = {
   Languages: [
     { name: "TypeScript", icon: <SiTypescript />, level: 88 },
     { name: "JavaScript", icon: <SiJavascript />, level: 90 },

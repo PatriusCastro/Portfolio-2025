@@ -6,7 +6,20 @@ import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 
 const INITIAL_COUNT = 3;
 
-const projects = [
+// `github` and `features` come from each project's public repository (stats as of Nov 2026).
+export const projects = [
+  {
+    title: "Todoro",
+    github: { stars: 3, commits: 137, languages: "TypeScript 91% · PLpgSQL 5% · CSS 2%", updated: "Aug 2026" },
+    features: ["Pomodoro timer with customizable work and break intervals","Task manager alongside the timer","Installable app that works offline","Local-first: no account needed, optional sign-in to sync across devices"],
+    description: "A Progressive Web App that combines a Pomodoro timer with a task manager for deep focus sessions. Works offline and installs like a native app.",
+    imageUrl: "/images/Todoro.png",
+    repoUrl: "https://github.com/PatriusCastro/todoro.v2",
+    liveUrl: "https://todo-ro.vercel.app/",
+    technologies: ["Next.js", "TypeScript", "Supabase", "Tailwind"],
+    live: true,
+    year: "2026",
+  },
   {
     title: "VetSync",
     description: "A platform to find trusted veterinary clinics nearby, book appointment, view services, and get care for pets.",
@@ -19,6 +32,7 @@ const projects = [
   },
   {
     title: "Request Management System",
+    github: { stars: 1, commits: 65, languages: "Blade 53% · PHP 46%", updated: "Jun 2025" },
     description: "A web-based application designed to streamline the handling of various requests within an organization.",
     imageUrl: "/images/Req-Management.png",
     repoUrl: "https://github.com/markdonnie/purchase-request",
@@ -29,6 +43,8 @@ const projects = [
   },
   {
     title: "iRenta",
+    github: { stars: 2, commits: 446, languages: "JavaScript 100%", updated: "Nov 2026" },
+    features: ["Owners manage listings, tenants, payments and lease agreements","Tenants request visits, track payments and submit maintenance requests","Seekers search listings by location, price or amenities","Built as a capstone project"],
     description: "A comprehensive platform to simplify the management and search of rental properties. Built for landlords and tenants alike.",
     imageUrl: "/images/iRenta.png",
     repoUrl: "https://github.com/Takezooo/irenta",
@@ -39,6 +55,7 @@ const projects = [
   },
   {
     title: "Kababayan Rice",
+    github: { stars: 1, commits: 98, languages: "Python 47% · HTML 28% · CSS 25%", updated: "Jun 2024" },
     description: "E-commerce platform for a local rice business. Features product listings, cart management, and a streamlined checkout flow.",
     imageUrl: "/images/Kababayan.png",
     repoUrl: "https://github.com/SandorTheMoon/KabayanRicePrototype",
@@ -49,6 +66,7 @@ const projects = [
   },
   {
     title: "Patfolio Website",
+    github: { stars: 1, commits: 59, languages: "CSS 54% · HTML 44% · JavaScript 2%", updated: "Aug 2024" },
     description: "Personal portfolio site built during college. A snapshot of early-career frontend work and design exploration.",
     imageUrl: "/images/Patfolio.png",
     repoUrl: "https://github.com/PatriusCastro/Patfolio",

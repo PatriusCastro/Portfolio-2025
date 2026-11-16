@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { FiMonitor } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = ["about", "skills", "projects", "contact"] as const;
@@ -95,15 +97,18 @@ export default function Navbar() {
         ].join(" ")}
       >
         {/* Logo */}
-        <button
-          className="group text-sm hover:opacity-75 transition-opacity duration-200 bg-transparent border-0 p-0 cursor-pointer font-mono text-[var(--text)]"
-          aria-label="Scroll to top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          <span className="text-[var(--accent-dim)]">{"<"}</span>
-          <span className="patrius-text">patrius</span>
-          <span className="text-[var(--accent-dim)]">{" />"}</span>
-        </button>
+        {/* Logo and right side share the leftover width equally, so the links sit dead centre */}
+        <div className="sm:flex-1 flex">
+          <button
+            className="group text-sm hover:opacity-75 transition-opacity duration-200 bg-transparent border-0 py-2 px-0 cursor-pointer font-mono text-[var(--text)]"
+            aria-label="Scroll to top"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <span className="text-[var(--accent-dim)]">{"<"}</span>
+            <span className="patrius-text">patrius</span>
+            <span className="text-[var(--accent-dim)]">{" />"}</span>
+          </button>
+        </div>
 
         {/* Desktop nav links */}
         <div className="hidden sm:flex items-center gap-1 font-mono text-[11px] tracking-[0.12em]">
@@ -114,12 +119,13 @@ export default function Navbar() {
                 key={link}
                 href={`#${link}`}
                 onClick={() => setMenuOpen(false)}
+                aria-current={isActive ? "location" : undefined}
                 className={[
-                  "relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-md",
+                  "relative flex items-center gap-1.5 px-3.5 py-2 rounded-md",
                   "uppercase no-underline transition-colors duration-200",
                   isActive
                     ? "text-[var(--text)] bg-[var(--accent-pale)]"
-                    : "text-[var(--text-sub)] hover:text-[var(--accent-mid)] bg-transparent",
+                    : "text-[var(--text-sub)] hover:text-[var(--text)] hover:bg-[var(--surface2)]",
                 ].join(" ")}
               >
                 {isActive && (
@@ -136,11 +142,19 @@ export default function Navbar() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-2.5">
-          <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-[var(--text-sub)]">
+        <div className="sm:flex-1 flex items-center justify-end gap-2.5">
+          <div className="hidden lg:flex items-center gap-2 mr-1 font-mono text-[11px] text-[var(--text-sub)] tabular-nums">
             <span className="status-dot" />
             {time}
           </div>
+
+          <Link
+            href="/"
+            title="Switch to desktop mode"
+            className="hidden sm:flex items-center gap-1.5 h-[34px] px-3 rounded-lg border border-[var(--border-hover)] bg-[var(--accent-pale)] font-mono text-[11px] tracking-[0.12em] uppercase no-underline text-[var(--accent-mid)] transition-colors duration-200 hover:bg-[var(--accent-glow)]"
+          >
+            <FiMonitor /> desktop
+          </Link>
 
           <ThemeToggle />
 
@@ -226,6 +240,13 @@ export default function Navbar() {
                 </motion.a>
               ))}
 
+              <Link
+                href="/"
+                className="flex items-center justify-between px-5 py-4 border-t border-[var(--border)] no-underline uppercase font-mono text-[12px] tracking-[0.12em] text-[var(--accent-mid)]"
+              >
+                <span>desktop mode</span>
+                <FiMonitor />
+              </Link>
               <div className="flex items-center gap-2 px-5 py-3 border-t border-[var(--border)] font-mono text-[11px] text-[var(--muted2)]">
                 <span className="status-dot" />
                 {time}
