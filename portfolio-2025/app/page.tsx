@@ -13,15 +13,17 @@ export default async function Home() {
   const { projectCount, stars } = await getGithubStats();
 
   return (
-    <main className="min-h-screen relative z-10 sm:px-8 md:px-12 lg:px-20 xl:px-36 2xl:px-52">
+    <div className="min-h-screen relative z-10 sm:px-8 md:px-12 lg:px-20 xl:px-36 2xl:px-52">
       <Navbar />
-      <Hero />
-      <FadeInSection delay={0.1}><Stats projectCount={projectCount} stars={stars} /></FadeInSection>
-      <FadeInSection delay={0.2}><About /></FadeInSection>
-      <FadeInSection delay={0.3}><Skills /></FadeInSection>
-      <FadeInSection delay={0.4}><Project /></FadeInSection>
-      <FadeInSection delay={0.5}><Contact /></FadeInSection>
+      <main>
+        <Hero />
+        <FadeInSection><Stats projectCount={projectCount} stars={stars} /></FadeInSection>
+        <FadeInSection><About /></FadeInSection>
+        <FadeInSection><Skills /></FadeInSection>
+        <FadeInSection><Project /></FadeInSection>
+        <FadeInSection><Contact /></FadeInSection>
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }

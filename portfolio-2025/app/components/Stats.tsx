@@ -43,7 +43,7 @@ export default function Stats({ projectCount, stars }: StatsProps) {
 
   return (
     <section ref={sectionRef} className="mb-20 sm:rounded-xl overflow-hidden border border-[var(--border)]">
-      <div className="grid grid-cols-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-[var(--border)]">
         {statValues.map((val, i) => (
           <a
             key={i}
@@ -51,11 +51,11 @@ export default function Stats({ projectCount, stars }: StatsProps) {
             target="_blank"
             rel="noopener noreferrer"
             className={`flex flex-col items-center gap-2.5 py-7 px-5 text-center bg-[var(--surface)] transition-all duration-300 hover:bg-[var(--surface2)]
-              ${i < 3 ? "border-r border-[var(--border)]" : ""}`}
+              `}
           >
             <span className="text-sm text-[var(--accent-dim)] opacity-80">{statIcons[i]}</span>
             <div className="text-3xl font-bold font-mono text-[var(--text)] leading-none">{val}</div>
-            <div className="font-mono text-[9px] text-[var(--muted)] tracking-[0.14em] uppercase">{statLabels[i]}</div>
+            <div className="font-mono text-[11px] text-[var(--muted)] tracking-[0.14em] uppercase">{statLabels[i]}</div>
           </a>
         ))}
       </div>

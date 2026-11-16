@@ -56,6 +56,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body style={{ fontFamily: "var(--font-body, 'Sora', sans-serif)" }}>
+        {/* Scroll-reveal sections render at opacity 0; show them when JS is off */}
+        <noscript>
+          <style>{`[style*="opacity"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <ThemeProvider enableSystem={true} defaultTheme="system">
           <div className="dot-grid" />
           <div className="vignette" />

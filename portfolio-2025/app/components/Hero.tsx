@@ -37,7 +37,7 @@ export default function Hero() {
       className="relative flex flex-col items-center justify-center min-h-[88vh] py-12 text-center overflow-hidden"
     >
       <div className="relative z-10 flex flex-col items-center">
-        <div className="mb-7 flex items-center gap-2 font-[var(--font-mono)] text-[11px] tracking-[0.1em] text-[var(--muted)]">
+        <div className="mb-7 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] text-[var(--muted)]">
           <span className="text-[var(--green)]">~/portfolio</span>
           <span className="text-[var(--muted2)]">›</span>
           <span>whoami</span>
@@ -53,7 +53,7 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-          className="mb-11 h-6 font-[var(--font-mono)] text-[13px] tracking-[0.04em] text-[var(--muted)]"
+          className="mb-11 h-6 font-mono text-[13px] tracking-[0.04em] text-[var(--muted)]"
         >
           <span className="text-[var(--accent-dim)]">$ </span>
           <span className="text-[var(--text)]">{role}</span>
@@ -64,16 +64,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
           className="flex gap-3"
         >
-          <button
-            className="btn-primary font-[var(--font-mono)]"
-            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-          >
+          <a href="#contact" className="btn-primary font-mono font-semibold no-underline">
             Contact Me
-          </button>
+          </a>
           <a
             href="/files/Castro_Resume.pdf"
-            download target="_blank" rel="noopener noreferrer"
-            className="btn-ghost font-[var(--font-mono)] no-underline"
+            download
+            className="btn-ghost font-mono no-underline"
           >
             Download CV
           </a>

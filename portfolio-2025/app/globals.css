@@ -37,16 +37,16 @@ button {
   --border:   rgba(0, 0, 0, 0.07);
   --text:     #0f1117;
   --text-sub: #3a3f52;
-  --muted:    #7a84a0;
-  --muted2:   #b8bfce;
-  --green:    #0bdd74;
+  --muted:    #5c6584;
+  --muted2:   #687089;
+  --green:    #087a40;
 }
 
 /* Dark mode overrides */
 [data-theme="dark"] {
   --accent-mid:    hsl(224, 90%, 68%);
   --accent-soft:   hsl(224, 85%, 78%);
-  --accent-dim:    hsl(224, 75%, 55%);
+  --accent-dim:    hsl(224, 78%, 64%);
   --accent-pale:   rgba(77, 127, 255, 0.09);
   --accent-glow:   rgba(77, 127, 255, 0.22);
   --border-hover:  rgba(77, 127, 255, 0.35);
@@ -60,8 +60,8 @@ button {
   --border:   rgba(255, 255, 255, 0.07);
   --text:     #eef0f8;
   --text-sub: #b0b8d0;
-  --muted:    #4a5272;
-  --muted2:   #2e3450;
+  --muted:    #8a93b0;
+  --muted2:   #7e87a4;
   --green:    #4a9a6a;
 }
 
@@ -186,7 +186,7 @@ body {
 
 /* Section label */
 .section-label {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.28em;
   color: var(--accent-dim);
   text-transform: uppercase;
@@ -215,7 +215,7 @@ body {
 
 /* Tech chip */
 .tech-chip {
-  font-size: 10px;
+  font-size: 11px;
   padding: 3px 9px;
   border-radius: 3px;
   background: var(--accent-pale);
@@ -223,7 +223,6 @@ body {
   color: var(--accent-dim);
   letter-spacing: 0.04em;
   transition: all 0.2s;
-  opacity: 0.8;
 }
 .glow-card:hover .tech-chip {
   opacity: 1;
@@ -269,7 +268,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  font-size: 8px;
+  font-size: 11px;
   color: var(--muted);
   letter-spacing: 0.22em;
 }
@@ -288,7 +287,6 @@ body {
   padding: 10px 14px;
   color: var(--text);
   font-size: 13px;
-  outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 .form-input:focus {
@@ -310,10 +308,9 @@ body {
   letter-spacing: 0.1em;
 }
 .btn-primary:hover {
-  background: rgba(77, 127, 255, 0.14);
+  background: var(--accent-glow);
   border-color: var(--accent-mid);
   box-shadow: 0 0 20px var(--accent-glow);
-  color: var(--accent-soft);
 }
 .btn-ghost {
   padding: 10px 26px;
@@ -335,4 +332,21 @@ body {
 .theme-toggle-btn:hover {
   border-color: var(--border-hover) !important;
   box-shadow: 0 0 12px var(--accent-glow);
+}
+/* Anchored sections clear the sticky nav */
+section[id] { scroll-margin-top: 90px; }
+
+/* Keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--accent-mid);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -60,7 +60,7 @@ function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`p-3.5 rounded-lg border flex flex-col gap-2.5 cursor-default transition-all duration-200
-        ${hovered ? "border-[var(--border-hover)] bg-[rgba(0,0,139,0.06)]" : "border-[var(--border)] bg-[var(--surface2)]"}`}
+        ${hovered ? "border-[var(--border-hover)] bg-[var(--accent-pale)]" : "border-[var(--border)] bg-[var(--surface2)]"}`}
     >
       <div className="flex items-center gap-2.5 min-w-0">
         <span className={`text-[18px] shrink-0 transition-colors duration-200 ${hovered ? "text-[var(--accent-mid)]" : "text-[var(--accent-dim)]"}`}>
@@ -72,7 +72,7 @@ function SkillTile({ skill, animated }: { skill: Skill; animated: boolean }) {
         >
           {skill.name}
         </span>
-        <span className={`font-mono text-[10px] text-[var(--accent-mid)] ml-auto shrink-0 transition-all duration-200 ${hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1.5"}`}>
+        <span className={`font-mono text-[11px] text-[var(--accent-mid)] ml-auto shrink-0 transition-all duration-200 ${hovered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1.5"}`}>
           {skill.level}%
         </span>
       </div>
@@ -113,7 +113,7 @@ export default function Skills() {
               onClick={() => setActiveGroup(group)}
               className={`px-4 py-1.5 rounded text-xs font-mono tracking-wide border transition-all duration-200
                 ${activeGroup === group
-                  ? "border-[rgba(0,0,139,0.45)] bg-[rgba(0,0,139,0.08)] text-[var(--accent-mid)]"
+                  ? "border-[var(--border-hover)] bg-[var(--accent-pale)] text-[var(--accent-mid)]"
                   : "border-[var(--border)] bg-transparent text-[var(--muted)]"}`}
             >
               {group}

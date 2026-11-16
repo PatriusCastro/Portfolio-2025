@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
-import { useRouter } from "next/navigation";
 
 const NAV_LINKS = ["about", "skills", "projects", "contact"] as const;
 
@@ -14,7 +13,6 @@ export default function Navbar() {
   const [time,       setTime]       = useState("");
   const [menuOpen,   setMenuOpen]   = useState(false);
   const [isMobile,   setIsMobile]   = useState(false);
-  const router = useRouter();
 
   const handleScroll = useCallback(() => {
     const top = window.scrollY;
@@ -64,10 +62,11 @@ export default function Navbar() {
     if (!isMobile) setMenuOpen(false);
   }, [isMobile]);
 
-  const scrollTo = (id: string) => {
-    setMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const drawerVisible = menuOpen && isMobile;
 
@@ -97,9 +96,9 @@ export default function Navbar() {
       >
         {/* Logo */}
         <button
-          className="group text-sm hover:opacity-75 transition-opacity duration-200 bg-transparent border-0 p-0 cursor-pointer font-[var(--font-mono)] text-[var(--text)]"
+          className="group text-sm hover:opacity-75 transition-opacity duration-200 bg-transparent border-0 p-0 cursor-pointer font-mono text-[var(--text)]"
           aria-label="Scroll to top"
-          onClick={() => { router.push("/"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <span className="text-[var(--accent-dim)]">{"<"}</span>
           <span className="patrius-text">patrius</span>
@@ -107,14 +106,14 @@ export default function Navbar() {
         </button>
 
         {/* Desktop nav links */}
-        <nav className="hidden sm:flex items-center gap-1 font-[var(--font-mono)] text-[10px] tracking-[0.12em]">
+        <div className="hidden sm:flex items-center gap-1 font-mono text-[11px] tracking-[0.12em]">
           {NAV_LINKS.map(link => {
             const isActive = activeLink === link;
             return (
               <a
                 key={link}
                 href={`#${link}`}
-                onClick={e => { e.preventDefault(); scrollTo(link); }}
+                onClick={() => setMenuOpen(false)}
                 className={[
                   "relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-md",
                   "uppercase no-underline transition-colors duration-200",
@@ -134,11 +133,11 @@ export default function Navbar() {
               </a>
             );
           })}
-        </nav>
+        </div>
 
         {/* Right side */}
         <div className="flex items-center gap-2.5">
-          <div className="hidden sm:flex items-center gap-2 font-[var(--font-mono)] text-[10px] text-[var(--text-sub)]">
+          <div className="hidden sm:flex items-center gap-2 font-mono text-[11px] text-[var(--text-sub)]">
             <span className="status-dot" />
             {time}
           </div>
@@ -157,6 +156,7 @@ export default function Navbar() {
             ].join(" ")}
             onClick={() => setMenuOpen(v => !v)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
             whileTap={{ scale: 0.88 }}
           >
             <div className="relative w-4 h-3">
@@ -206,10 +206,10 @@ export default function Navbar() {
                 <motion.a
                   key={link}
                   href={`#${link}`}
-                  onClick={e => { e.preventDefault(); scrollTo(link); }}
+                  onClick={() => setMenuOpen(false)}
                   className={[
                     "flex items-center justify-between px-5 py-4 no-underline uppercase transition-colors duration-150",
-                    "font-[var(--font-mono)] text-[12px] tracking-[0.12em]",
+                    "font-mono text-[12px] tracking-[0.12em]",
                     i < NAV_LINKS.length - 1 ? "border-b border-[var(--border)]" : "",
                     activeLink === link
                       ? "text-[var(--accent-mid)] bg-[var(--accent-pale)]"
@@ -226,7 +226,7 @@ export default function Navbar() {
                 </motion.a>
               ))}
 
-              <div className="flex items-center gap-2 px-5 py-3 border-t border-[var(--border)] font-[var(--font-mono)] text-[10px] text-[var(--muted2)]">
+              <div className="flex items-center gap-2 px-5 py-3 border-t border-[var(--border)] font-mono text-[11px] text-[var(--muted2)]">
                 <span className="status-dot" />
                 {time}
               </div>

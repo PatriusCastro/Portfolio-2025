@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [pressed, setPressed] = useState(false);
 
   useEffect(() => setMounted(true), []);
-  if (!mounted) return <div className="w-34 h-34 radius-8 shrink-0"/>;
+  if (!mounted) return <div className="w-[34px] h-[34px] shrink-0" />;
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   const toggle = () => {
     setPressed(true);
@@ -36,7 +36,6 @@ export default function ThemeToggle() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        outline: "none",
         flexShrink: 0,
         overflow: "hidden",
         transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",

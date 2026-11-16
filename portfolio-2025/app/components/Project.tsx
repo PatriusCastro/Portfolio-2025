@@ -81,11 +81,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
           className={`w-full h-full object-cover transition-transform duration-500 ${hovered ? "scale-105" : "scale-100"}`}
         />
         <div className={`absolute inset-0 bg-gradient-to-b from-[rgba(0,0,139,0.15)] to-[rgba(0,0,0,0.55)] transition-opacity duration-300 ${hovered ? "opacity-100" : "opacity-0"}`} />
-        <span className="absolute top-3 left-3 font-mono text-[10px] tracking-widest px-2 py-0.5 rounded bg-black/50 backdrop-blur border border-white/10 text-white/60">
+        <span className="absolute top-3 left-3 font-mono text-[11px] tracking-widest px-2 py-0.5 rounded bg-black/50 backdrop-blur border border-white/10 text-white/80">
           {project.year}
         </span>
-        <span className={`absolute top-3 right-3 font-mono text-[9px] tracking-widest px-2 py-0.5 rounded bg-black/50 backdrop-blur border
-          ${project.live ? "border-[rgba(0,180,90,0.4)] text-[var(--green)]" : "border-white/10 text-white/40"}`}>
+        <span className={`absolute top-3 right-3 font-mono text-[11px] tracking-widest px-2 py-0.5 rounded bg-black/50 backdrop-blur border
+          ${project.live ? "border-[rgba(74,222,128,0.4)] text-[#4ade80]" : "border-white/10 text-white/70"}`}>
           {project.live ? "LIVE" : "ARCHIVED"}
         </span>
       </div>
@@ -105,7 +105,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-[var(--border)] font-mono text-[11px] tracking-wide text-[var(--muted)] no-underline transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[rgba(0,0,139,0.06)]"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-md border border-[var(--border)] font-mono text-[11px] tracking-wide text-[var(--muted)] no-underline transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[var(--accent-pale)]"
             >
               <FaGithub size={13} /> Source Code
             </a>
@@ -115,7 +115,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-1 items-center justify-center gap-1.5 px-4 py-2 rounded-md border border-[rgba(0,0,139,0.4)] font-mono text-[11px] tracking-wide text-[var(--accent-mid)] bg-[rgba(0,0,139,0.07)] no-underline transition-all duration-200 hover:bg-[rgba(0,0,139,0.14)]"
+              className="flex flex-1 items-center justify-center gap-1.5 px-4 py-2 rounded-md border border-[var(--border-hover)] font-mono text-[11px] tracking-wide text-[var(--accent-mid)] bg-[var(--accent-pale)] no-underline transition-all duration-200 hover:bg-[var(--accent-glow)]"
             >
               <FaExternalLinkAlt size={11} /> Live
             </a>
@@ -138,7 +138,7 @@ export default function Project() {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2 text-[var(--text)]">Featured Projects</h2>
-            <p className="text-sm max-w-md leading-relaxed text-[var(--muted)]">A selection of things I've built — hover a card to explore.</p>
+            <p className="text-sm max-w-md leading-relaxed text-[var(--muted)]">A selection of things I've built.</p>
           </div>
           <a
             href="https://github.com/PatriusCastro"
@@ -163,7 +163,7 @@ export default function Project() {
         <div className="flex justify-center mt-10">
           <button
             onClick={() => setShowAll(prev => !prev)}
-            className="group font-mono text-[11px] tracking-widest px-6 py-2.5 rounded-md border border-[var(--border)] text-[var(--muted)] transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[rgba(0,0,139,0.06)]"
+            className="group font-mono text-[11px] tracking-widest px-6 py-2.5 rounded-md border border-[var(--border)] text-[var(--muted)] transition-all duration-200 hover:border-[var(--border-hover)] hover:text-[var(--accent-mid)] hover:bg-[var(--accent-pale)]"
           >
             {showAll
               ? "SHOW LESS ↑"
