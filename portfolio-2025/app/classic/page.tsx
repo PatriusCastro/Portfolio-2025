@@ -8,6 +8,16 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import { getGithubStats } from "../lib/github";
 import FadeInSection from "../components/FadeInSection";
+import type { Metadata } from "next";
+
+const ogImage = { url: "/og-classic.png", width: 1200, height: 630, alt: "Patrius Castro's classic one-page portfolio" };
+
+// Child metadata replaces openGraph/twitter wholesale, so this restates them with the classic screenshot.
+export const metadata: Metadata = {
+  title: "Patrius Castro — Classic",
+  openGraph: { title: "Patrius Castro — Classic", description: "The classic one-page version of Patrick Josuah Castro's portfolio.", url: "/classic", siteName: "Patrius Castro", type: "website", images: [ogImage] },
+  twitter: { card: "summary_large_image", title: "Patrius Castro — Classic", images: [ogImage.url] },
+};
 
 export default async function Home() {
   const { projectCount, stars } = await getGithubStats();
