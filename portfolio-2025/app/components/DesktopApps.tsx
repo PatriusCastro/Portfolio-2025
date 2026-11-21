@@ -22,7 +22,7 @@ function Details({ p }: { p: typeof projects[number] }) {
       <h3 className="font-bold text-base text-[var(--text)]">{p.title}</h3>
       <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 font-mono text-[11px]">
         <dt className="text-[var(--muted)]">Type</dt>
-        <dd className={p.live ? "text-[var(--green)]" : ""}>{p.live ? "Live site" : "Archived project"}</dd>
+        <dd className={p.live ? "text-[var(--green)]" : ""}>{p.status ?? (p.live ? "Live site" : "Archived project")}</dd>
         <dt className="text-[var(--muted)]">Year</dt>
         <dd>{p.year}</dd>
       </dl>
@@ -71,7 +71,7 @@ export function Explorer({ onOpen }: { onOpen: (index: number) => void }) {
         {projects.map((f, i) => (
           <li key={f.title}>
             <button
-              onClick={() => setSel(i)}
+              onClick={() => (matchMedia("(pointer: coarse)").matches ? onOpen(i) : setSel(i))} // touch has no double-click: a tap opens
               onDoubleClick={() => onOpen(i)}
               onKeyDown={e => { if (e.key === "Enter" && i === sel) { e.preventDefault(); onOpen(i); } }}
               aria-pressed={i === sel}

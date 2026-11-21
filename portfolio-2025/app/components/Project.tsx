@@ -9,6 +9,31 @@ const INITIAL_COUNT = 3;
 // `github` and `features` come from each project's public repository (stats as of Nov 2026).
 export const projects = [
   {
+    title: "Pulo",
+    github: { stars: 1, commits: 71, languages: "TypeScript 44% · Rust 43% · CSS 9%", updated: "Nov 2026" },
+    features: ["Now playing with controls and synced lyrics","Pomodoro focus timer with rounds","Calendar heads-up, finished downloads and notifications","Quick tools: dark mode, mic mute, keep awake, system stats"],
+    description: "A Dynamic Island for Windows: a small pill at the top of the screen for music, lyrics, a focus timer, files and more. Hover to peek, click to open.",
+    imageUrl: "/images/Pulo.png",
+    repoUrl: "https://github.com/PatriusCastro/Pulo",
+    liveUrl: "https://patriuscastro.github.io/Pulo/",
+    technologies: ["Tauri", "Rust", "React", "TypeScript"],
+    live: true,
+    year: "2026",
+  },
+  {
+    title: "Prepon",
+    github: { stars: 0, commits: 24, languages: "TypeScript 44% · CSS 28% · JavaScript 27%", updated: "Nov 2026" },
+    features: ["Reads the codebase first: tokens, components, domain and users","Rationale table that names the principle behind each choice","Detector with 53 rules that flags the generic AI look","Audit, build and fix modes for web and mobile UI"],
+    description: "A Claude Code skill for UI work on enterprise products like government portals and banking apps. It catches the generic AI look and replaces it with choices that fit the product.",
+    imageUrl: "/images/Prepon.png",
+    repoUrl: "https://github.com/PatriusCastro/prepon",
+    liveUrl: "",
+    technologies: ["Claude Code", "TypeScript", "Node.js"],
+    live: false,
+    status: "Claude Code plugin",
+    year: "2026",
+  },
+  {
     title: "Todoro",
     github: { stars: 3, commits: 137, languages: "TypeScript 91% · PLpgSQL 5% · CSS 2%", updated: "Aug 2026" },
     features: ["Pomodoro timer with customizable work and break intervals","Task manager alongside the timer","Installable app that works offline","Local-first: no account needed, optional sign-in to sync across devices"],

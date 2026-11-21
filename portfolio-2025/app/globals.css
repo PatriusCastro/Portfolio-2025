@@ -72,19 +72,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.dot-grid {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: radial-gradient(rgba(0, 0, 180, 0.05) 1px, transparent 1px);
-  background-size: 36px 36px;
-}
-
-[data-theme="dark"] .dot-grid {
-  background-image: radial-gradient(rgba(77, 127, 255, 0.09) 1px, transparent 1px);
-}
-
 .vignette {
   position: fixed;
   inset: 0;
@@ -118,6 +105,7 @@ body {
 /* Metallic hero text */
 .hero-metallic {
   display: inline-block;
+  font-family: var(--font-display), var(--font-body), sans-serif;
   background: linear-gradient(
     115deg,
     var(--text)        0%,
@@ -351,6 +339,26 @@ section[id] { scroll-margin-top: 90px; }
   }
 }
 
+/* macOS-style frosted material shared by the dock and the island */
+:root {
+  --glass-edge: rgba(0, 0, 0, 0.1);
+  --glass-hi: rgba(255, 255, 255, 0.75);
+}
+[data-theme="dark"] {
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-hi: rgba(255, 255, 255, 0.08);
+}
+.glass {
+  background: color-mix(in srgb, var(--surface) 58%, transparent);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  backdrop-filter: blur(28px) saturate(1.8);
+  border: 1px solid var(--glass-edge);
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
 /* Desktop wallpaper: slow-drifting colour fields under a film of static noise */
 :root {
   --wp-a: hsla(228, 100%, 60%, 0.22);
@@ -371,17 +379,26 @@ section[id] { scroll-margin-top: 90px; }
   overflow: hidden;
   pointer-events: none;
 }
-.wallpaper::before {
+/* Two colour layers drifting against each other (the span is the second), so the motion reads as flowing.
+   Transform-only, so it stays on the compositor. No blur filter: the gradients are already soft. */
+.wallpaper::before,
+.wallpaper > span {
   content: '';
   position: absolute;
   inset: -25%;
-  background:
-    radial-gradient(38% 42% at 24% 30%, var(--wp-a), transparent 70%),
-    radial-gradient(34% 44% at 76% 66%, var(--wp-b), transparent 70%),
-    radial-gradient(28% 30% at 62% 18%, var(--wp-c), transparent 70%);
-  filter: blur(40px);
-  animation: wallpaper-drift 26s ease-in-out infinite alternate;
   will-change: transform;
+}
+.wallpaper::before {
+  background:
+    radial-gradient(38% 42% at 24% 30%, var(--wp-a), transparent 75%),
+    radial-gradient(28% 30% at 62% 18%, var(--wp-c), transparent 75%);
+  animation: wallpaper-drift 18s ease-in-out infinite alternate;
+}
+.wallpaper > span {
+  background:
+    radial-gradient(34% 44% at 76% 66%, var(--wp-b), transparent 75%),
+    radial-gradient(26% 30% at 22% 78%, var(--wp-c), transparent 75%);
+  animation: wallpaper-drift-2 23s ease-in-out infinite alternate;
 }
 .wallpaper::after {
   content: '';
@@ -391,8 +408,14 @@ section[id] { scroll-margin-top: 90px; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 @keyframes wallpaper-drift {
-  0%   { transform: translate3d(-5%, -3%, 0) rotate(0deg)  scale(1); }
-  50%  { transform: translate3d(4%, 5%, 0)   rotate(10deg) scale(1.12); }
-  100% { transform: translate3d(6%, -4%, 0)  rotate(-8deg) scale(1.05); }
+  0%   { transform: translate3d(-9%, -6%, 0) rotate(0deg)   scale(1); }
+  35%  { transform: translate3d(10%, 4%, 0)  rotate(12deg)  scale(1.16); }
+  70%  { transform: translate3d(-2%, 10%, 0) rotate(-6deg)  scale(1.06); }
+  100% { transform: translate3d(8%, -9%, 0)  rotate(-14deg) scale(1.2); }
+}
+@keyframes wallpaper-drift-2 {
+  0%   { transform: translate3d(9%, 7%, 0)    rotate(0deg)   scale(1.1); }
+  50%  { transform: translate3d(-11%, -4%, 0) rotate(-12deg) scale(1); }
+  100% { transform: translate3d(-3%, -11%, 0) rotate(9deg)   scale(1.22); }
 }
 
